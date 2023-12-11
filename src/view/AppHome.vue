@@ -1,4 +1,5 @@
 <template>
+    <Jumbo></Jumbo>
     <div class="my-3">
         <div class="container">
             <div class="row g-4">
@@ -12,6 +13,7 @@
 
 <script>
 import ApartmentCard from '../components/ApartmentCard.vue';
+import Jumbo from '../components/Jumbo.vue';
 import { state } from '../store';
 
 export default {
@@ -21,7 +23,7 @@ export default {
             state
         };
     },
-    components: { ApartmentCard }
+    components: { ApartmentCard, Jumbo }
 }
 </script>
 
