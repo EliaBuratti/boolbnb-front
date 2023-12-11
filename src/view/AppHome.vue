@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="my-3">
         <div class="container">
             <div class="row g-4">
                 <div class="col-4" v-for="apartment in state.apartments">

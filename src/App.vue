@@ -8,7 +8,10 @@ export default {
         return {
             state
         }
-
+    },
+    components: {
+        AppHeader,
+        AppFooter
     },
     mounted() {
         state.fetchData()
@@ -18,5 +21,6 @@ export default {
 
 <template>
     <AppHeader></AppHeader>
+    <router-view></router-view>
     <AppFooter></AppFooter>
 </template>

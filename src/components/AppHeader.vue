@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-    <header class="py-3 w-100">
+    <header class="bg-light py-3 w-100 sticky-top">
         <nav class="navbar navbar-expand-sm navbar-light">
             <div class="container">
                 <a class="navbar-brand" href="#">BoolBnb Logo</a>
