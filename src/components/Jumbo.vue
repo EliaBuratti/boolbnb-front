@@ -1,6 +1,42 @@
 <script>
+import axios from 'axios';
 export default {
-    name: 'Jumbo'
+    name: 'Jumbo',
+    data() {
+        return {
+            apartments: [],
+            location: '',
+            guests: null
+        }
+    },
+    methods: {
+        searchApartment() {
+            console.log(this.location, this.guests);
+            axios.get('http://127.0.0.1:8000/api/apartments')
+                .then(response => {
+                    //console.log(response.data.result.data);
+                    this.apartments = [];
+                    console.log(this.apartments);
+
+                    //this.apartments = response.data.result.data;
+
+                    (response.data.result.data).forEach(apartment => {
+
+                        if (apartment.beds >= this.guests) {
+                            this.apartments.push(apartment);
+                        }
+
+                    });
+                    //console.log(this.apartments);
+
+
+
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
+    }
 }
 </script>
 
@@ -12,14 +48,16 @@ export default {
                 <div class="d-flex gap-3 align-items-end">
                     <div>
                         <label for="location" class="form-label">Location</label>
-                        <input type="text" class="form-control" name="location" id="location" placeholder="Location" />
+                        <input type="text" class="form-control" name="location" id="location" placeholder="Location"
+                            v-model="location" />
                     </div>
                     <div>
                         <label for="guests" class="form-label">Guests</label>
-                        <input type="number" class="form-control" name="guests" id="guests" placeholder="Guests" />
+                        <input type="number" class="form-control" name="guests" id="guests" placeholder="Guests"
+                            v-model="guests" />
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-primary">Search</button>
+                        <button type="submit" class="btn btn-primary" @click.prevent="searchApartment()">Search</button>
                     </div>
                 </div>
 
