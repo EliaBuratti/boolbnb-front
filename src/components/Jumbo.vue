@@ -19,17 +19,16 @@ export default {
                     console.log(this.apartments);
 
                     //this.apartments = response.data.result.data;
-
-                    (response.data.result.data).forEach(apartment => {
+                    const allApartments = response.data.result.data;
+                    allApartments.forEach(apartment => {
 
                         if (apartment.beds >= this.guests) {
                             this.apartments.push(apartment);
                         }
 
                     });
+
                     //console.log(this.apartments);
-
-
 
                 })
                 .catch(error => {
