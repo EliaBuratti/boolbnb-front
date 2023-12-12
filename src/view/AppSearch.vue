@@ -6,12 +6,14 @@
                 <form action="#" method="get">
                     <div class="mb-3">
                         <label for="rooms" class="form-label">Rooms</label>
-                        <input type="number" class="form-control" name="rooms" id="rooms" placeholder="Rooms number" />
+                        <input type="number" class="form-control" name="rooms" id="rooms" v-model="rooms"
+                            :placeholder="(this.rooms !== null ? this.rooms : 'Rooms number')" />
                     </div>
 
                     <div class="mb-3">
-                        <label for="beds" class="form-label">Beds</label>
-                        <input type="number" class="form-control" name="beds" id="beds" placeholder="Beds number" />
+                        <label for="beds" class="form-label">Guests</label>
+                        <input type="number" class="form-control" name="beds" id="beds" placeholder="Beds number"
+                            :placeholder="this.guests" v-model="guests" />
                     </div>
 
                     <div class="mb-3">
@@ -27,7 +29,7 @@
                     </div>
 
 
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" @click.prevent="searchApartment()">
                         Submit
                     </button>
 
@@ -40,7 +42,7 @@
                 <h1>Search results</h1>
                 <div class="row g-4">
                     <!-- Da cambiare con i risultati -->
-                    <div class="col-4" v-for="apartment in apartments">
+                    <div class="col-4" v-for=" apartment  in  apartments ">
                         <ApartmentCard :apartment="apartment"></ApartmentCard>
                     </div>
                 </div>
@@ -63,7 +65,8 @@ export default {
             state,
             apartments: [],
             location: this.$route.query.location,
-            guests: this.$route.query.guests
+            guests: this.$route.query.guests,
+            rooms: 1
         };
     },
     methods: {
@@ -74,12 +77,19 @@ export default {
                 url: 'http://127.0.0.1:8000/api/apartments',
                 params: {
                     beds: this.guests,
-                    city: this.location
+                    city: this.location,
+                    rooms: this.rooms
                 }
             })
                 .then(response => {
+                    console.log(this.rooms);
+
+                    console.log(this.apartments);
+
                     // console.log(response);
                     this.apartments = [];
+
+                    console.log(this.apartments);
 
                     this.apartments = response.data.result;
                     //const allApartments = response.data.result.data;
@@ -93,11 +103,35 @@ export default {
         }
     },
     mounted() {
-        console.log(this.$route.query.guests),
-            this.searchApartment()
+        this.searchApartment()
     },
     components: { ApartmentCard }
 }
 </script>
 
 <style lang="scss" scoped></style>
+
+
+
+<!-- 
+
+public function index(Request $request)
+    {
+        // Ottenere i parametri dalla query string
+        $beds = $request->query('beds');
+        $rooms = $request->query('rooms');
+
+
+        if ($request->query->has('beds') or $request->query->has('rooms')) {
+            $apartments = Apartment::with(['services', 'sponsorships'])->where(['beds', '>=', $beds], ['rooms', '>=', $rooms])->get();
+        } else {
+            $apartments = Apartment::with(['services', 'sponsorships'])->get();
+        }
+
+        return response()->json([
+            'success' => true,
+            'result' => $apartments,
+        ]);
+    }
+
+ -->

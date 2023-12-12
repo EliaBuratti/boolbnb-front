@@ -1,10 +1,8 @@
 <script>
-import axios from 'axios';
 export default {
     name: 'Jumbo',
     data() {
         return {
-            apartments: [],
             location: '',
             guests: null
         }
