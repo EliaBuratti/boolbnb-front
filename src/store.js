@@ -9,7 +9,7 @@ export const state = reactive({
     fetchData() {
         axios.get('http://127.0.0.1:8000/api/apartments')
             .then(response => {
-                this.apartments = response.data.result.data;
+                this.apartments = response.data.result;
                 //console.log(this.apartments);
             })
             .catch(error => {
