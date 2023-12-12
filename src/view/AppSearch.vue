@@ -82,19 +82,15 @@ export default {
                 }
             })
                 .then(response => {
-                    console.log(this.rooms);
-
-                    console.log(this.apartments);
-
                     // console.log(response);
                     this.apartments = [];
 
-                    console.log(this.apartments);
+                    //console.log(this.apartments);
 
                     this.apartments = response.data.result;
                     //const allApartments = response.data.result.data;
 
-                    console.log(this.apartments);
+                    //console.log(this.apartments);
 
                 })
                 .catch(error => {
@@ -110,28 +106,3 @@ export default {
 </script>
 
 <style lang="scss" scoped></style>
-
-
-
-<!-- 
-
-public function index(Request $request)
-    {
-        // Ottenere i parametri dalla query string
-        $beds = $request->query('beds');
-        $rooms = $request->query('rooms');
-
-
-        if ($request->query->has('beds') or $request->query->has('rooms')) {
-            $apartments = Apartment::with(['services', 'sponsorships'])->where(['beds', '>=', $beds], ['rooms', '>=', $rooms])->get();
-        } else {
-            $apartments = Apartment::with(['services', 'sponsorships'])->get();
-        }
-
-        return response()->json([
-            'success' => true,
-            'result' => $apartments,
-        ]);
-    }
-
- -->

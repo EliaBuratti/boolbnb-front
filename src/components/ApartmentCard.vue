@@ -1,5 +1,5 @@
 <template>
-    <div class="my_card">
+    <div class="my_card shadow">
         <img class="image" :src="this.baseURL + '/' + apartment.thumbnail" alt="">
         <div class="my_card_content">
             <span class="my_card_title">

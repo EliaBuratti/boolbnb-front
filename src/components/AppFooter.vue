@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-    <footer class="bg-dark py-3 sticky-bottom">
+    <footer class="bg-dark py-3">
         <div class="container d-flex justify-content-between">
             <a href="#" class="text-decoration-none text-white">Site Map</a>
             <div>
@@ -16,4 +16,10 @@ export default {
     </footer>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+</style>
