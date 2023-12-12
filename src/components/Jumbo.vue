@@ -10,32 +10,9 @@ export default {
         }
     },
     methods: {
-        searchApartment() {
-            console.log(this.location, this.guests);
-            axios.get('http://127.0.0.1:8000/api/apartments')
-                .then(response => {
-                    //console.log(response.data.result.data);
-                    this.apartments = [];
-                    console.log(this.apartments);
 
-                    //this.apartments = response.data.result.data;
-                    const allApartments = response.data.result.data;
-                    allApartments.forEach(apartment => {
+    },
 
-                        if (apartment.beds >= this.guests) {
-                            this.apartments.push(apartment);
-                        }
-
-                    });
-
-                    //console.log(this.apartments);
-
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        }
-    }
 }
 </script>
 
@@ -56,7 +33,14 @@ export default {
                             v-model="guests" />
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-primary" @click.prevent="searchApartment()">Search</button>
+                        <!-- <button type="submit" class="btn btn-primary" @click.prevent="searchApartment()">Search</button> -->
+                        <!-- <button type="submit" class="btn btn-primary" @click.prevent="advanceSearch()">Search</button> -->
+                        <!--                         <router-link to='/search' query: { beds: this.beds, city: this.city } })></router-link>
+ -->
+                        <router-link class="btn btn-primary"
+                            :to="{ path: '/search', query: { guests: this.guests, location: this.location } }">Search</router-link>
+
+
                     </div>
                 </div>
 
