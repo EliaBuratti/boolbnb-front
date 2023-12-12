@@ -21,6 +21,9 @@ export default {
 
 <template>
     <AppHeader></AppHeader>
-    <router-view></router-view>
+    <div class="pb-5 mb-4 pt-2 mt-1">
+
+        <router-view></router-view>
+    </div>
     <AppFooter></AppFooter>
 </template>
