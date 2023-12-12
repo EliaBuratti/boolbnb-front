@@ -40,7 +40,7 @@
                 <h1>Search results</h1>
                 <div class="row g-4">
                     <!-- Da cambiare con i risultati -->
-                    <div class="col-4" v-for="apartment in state.apartments">
+                    <div class="col-4" v-for="apartment in apartments">
                         <ApartmentCard :apartment="apartment"></ApartmentCard>
                     </div>
                 </div>
@@ -53,13 +53,48 @@
 <script>
 import ApartmentCard from '../components/ApartmentCard.vue';
 import { state } from '../store';
+import axios from 'axios';
+
 
 export default {
     name: 'AppSearch',
     data() {
         return {
-            state
+            state,
+            apartments: [],
+            location: this.$route.query.location,
+            guests: this.$route.query.guests
         };
+    },
+    methods: {
+        searchApartment() {
+            //console.log(this.location, this.guests);
+            axios({
+                method: 'get',
+                url: 'http://127.0.0.1:8000/api/apartments',
+                params: {
+                    beds: this.guests,
+                    city: this.location
+                }
+            })
+                .then(response => {
+                    // console.log(response);
+                    this.apartments = [];
+
+                    this.apartments = response.data.result;
+                    //const allApartments = response.data.result.data;
+
+                    console.log(this.apartments);
+
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
+    },
+    mounted() {
+        console.log(this.$route.query.guests),
+            this.searchApartment()
     },
     components: { ApartmentCard }
 }
