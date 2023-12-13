@@ -13,9 +13,7 @@ export default {
         AppHeader,
         AppFooter
     },
-    mounted() {
-        state.fetchData()
-    },
+
 }
 </script>
 

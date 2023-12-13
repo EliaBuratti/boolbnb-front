@@ -14,7 +14,7 @@
 <script>
 import ApartmentCard from '../components/ApartmentCard.vue';
 import Jumbo from '../components/Jumbo.vue';
-import { state } from '../store';
+import { state } from '../store.js';
 
 export default {
     name: 'AppHome',
@@ -23,7 +23,13 @@ export default {
             state
         };
     },
-    components: { ApartmentCard, Jumbo }
+    components: {
+        ApartmentCard,
+        Jumbo
+    },
+    mounted() {
+        state.fetchData()
+    }
 }
 </script>
 
