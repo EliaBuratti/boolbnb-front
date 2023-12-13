@@ -19,9 +19,6 @@ export default {
 
 <template>
     <AppHeader></AppHeader>
-    <div class="pb-5 mb-4 pt-2 mt-1">
-
-        <router-view></router-view>
-    </div>
+    <router-view></router-view>
     <AppFooter></AppFooter>
 </template>
