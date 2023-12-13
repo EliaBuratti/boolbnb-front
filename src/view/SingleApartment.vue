@@ -19,7 +19,7 @@ export default {
                     this.lat = this.apartment.latitude;
                     this.lng = this.apartment.longitude;
                     this.coordinates.push(this.lng, this.lat);
-
+                    this.fetchMap();
                 })
                 .catch(error => {
                     console.error(error);
@@ -41,10 +41,6 @@ export default {
     },
     mounted() {
         this.fetchSingleApartment();
-        setTimeout(() => {
-            console.log(this.coordinates);
-            this.fetchMap();
-        }, 1000);
     }
 }
 </script>
@@ -54,16 +50,49 @@ export default {
         <h1>{{ apartment.title }}</h1>
         <div class="row mb-3">
             <div class="col-8">
-                <img :src="'http://127.0.0.1:8000/storage/' + apartment.thumbnail" class="rounded-5">
+                <img :src="'http://127.0.0.1:8000/storage/' + apartment.thumbnail" class="w-100 rounded-5">
             </div>
-            <div class="col-4">Other images</div>
+            <div class="col-4">
+                <div class="row">
+                    <div v-for="image in apartment.images" class="col-6">
+                        <img :src="'http://127.0.0.1:8000/storage/' + image.img" class="w-100 rounded-3">
+                    </div>
+                </div>
+            </div>
         </div>
 
         <p>{{ apartment.description }}</p>
 
         <div class="mb-3">
+            <h3>Basic information</h3>
+            <div class="row row-cols-md-4">
+                <div class="col">
+                    <h6>Number of rooms</h6>
+                    {{ apartment.rooms }}
+                </div>
+                <div class="col">
+                    <h6>Number of beds</h6>
+                    {{ apartment.beds }}
+                </div>
+                <div class="col">
+                    <h6>Number of bathrooms</h6>
+                    {{ apartment.bathrooms }}
+                </div>
+                <div class="col">
+                    <h6>Surface in square meters</h6>
+                    {{ apartment.m_square }}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mb-3">
             <h3>Services</h3>
-            Services
+            <div class="d-flex gap-2">
+                <div class="badge bg-primary" v-for="service in apartment.services">
+                    {{ service.name }}
+                </div>
+            </div>
         </div>
 
         <div class="mb-5">
@@ -108,7 +137,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-#map{
+#map {
     width: 50%;
     height: 300px;
 }
