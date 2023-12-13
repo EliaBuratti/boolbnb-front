@@ -1,17 +1,19 @@
 <template>
-    <div class="my_card shadow">
-        <img class="image" :src="this.baseURL + '/' + apartment.thumbnail" alt="">
-        <div class="my_card_content">
-            <span class="my_card_title">
-                <h3>{{ apartment.title }}</h3>
-            </span>
-            <span class="my_card_subtitle">
-                <h5>{{ apartment.city }}</h5>
-            </span>
-            <!--                 <p class="my_card_description">{{ apartment.description }}</p>
- -->
+    <router-link :to="{name: 'apartment', params: {slug: apartment.slug}}">
+        <div class="my_card shadow">
+            <img class="image" :src="this.baseURL + '/' + apartment.thumbnail" alt="">
+            <div class="my_card_content">
+                <span class="my_card_title">
+                    <h3>{{ apartment.title }}</h3>
+                </span>
+                <span class="my_card_subtitle">
+                    <h5>{{ apartment.city }}</h5>
+                </span>
+                <!--                 <p class="my_card_description">{{ apartment.description }}</p>
+     -->
+            </div>
         </div>
-    </div>
+    </router-link>
 </template>
 
 <script>
