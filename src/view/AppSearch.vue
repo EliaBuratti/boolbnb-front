@@ -10,10 +10,7 @@ export default {
             state,
             apartments: [],
             location: this.$route.query.location,
-            //beds: this.$route.query.beds,
-            //CANCEL
-            beds: 2,
-            //CANCEL END
+            beds: this.$route.query.beds,
             rooms: 1,
             range: 20,
             coordinatesCenter: [],
@@ -53,6 +50,7 @@ export default {
 
                     //console.log(this.apartments);
                     this.coordinatesCenter = response.data.coordinates;
+                    console.log(this.coordinatesCenter);
 
                     if (this.apartments.length == 0) {
                         this.lngMin = this.coordinatesCenter[0];
@@ -108,7 +106,7 @@ export default {
                     const apartmentCoordinates = [apartment.longitude, apartment.latitude];
                     new tt.Marker().setLngLat(apartmentCoordinates).addTo(map);
                 });
-                new tt.Marker({color: '#ff0000', scale: 0.75}).setLngLat(this.coordinatesCenter).addTo(map);
+                new tt.Marker({color: '#ffde59', scale: 0.75}).setLngLat(this.coordinatesCenter).addTo(map);
             })
 
         }

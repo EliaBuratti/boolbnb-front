@@ -5,21 +5,25 @@ export default {
 </script>
 
 <template>
-    <footer class="bg-dark py-3">
-        <div class="container d-flex justify-content-between">
-            <a href="#" class="text-decoration-none text-white">Site Map</a>
-            <div>
-                <a href="#" class="me-3 text-decoration-none text-white">Contacts</a>
-                <a href="#" class="text-decoration-none text-white">Social</a>
+    <footer class="bg-dark text-light py-3">
+        <div class="container">
+            <div class="row row-cols-md-2 row-cols-1 g-3 justify-content-between">
+                <span class="col">BoolBnB ©, 2023</span>
+                <div class="col d-flex justify-content-end github">
+                    <a href="https://github.com/eliaburatti" class="me-3 nav-link hover" target=”_blank”>Elia Buratti</a>
+                    <a href="https://github.com/carlofanelli" class="me-3 nav-link hover" target=”_blank”>Carlo Fanelli</a>
+                    <a href="https://github.com/lucafranzoi98" class="me-3 nav-link hover" target=”_blank”>Luca Franzoi</a>
+                    <a href="https://github.com/danilosalerno" class="me-3 nav-link hover" target=”_blank”>Danilo
+                        Salerno</a>
+                </div>
             </div>
+
         </div>
     </footer>
 </template>
 
 <style lang="scss" scoped>
-footer {
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+.github {
+    font-size: 0.85rem;
 }
 </style>
