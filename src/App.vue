@@ -23,5 +23,5 @@ export default {
 
         <router-view></router-view>
     </div>
-    <AppFooter></AppFooter>
+    <!-- <AppFooter></AppFooter> -->
 </template>
