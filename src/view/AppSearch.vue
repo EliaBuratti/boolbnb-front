@@ -1,3 +1,125 @@
+<script>
+import ApartmentCard from '../components/ApartmentCard.vue';
+import { state } from '../store';
+import axios from 'axios';
+
+export default {
+    name: 'AppSearch',
+    data() {
+        return {
+            state,
+            apartments: [],
+            location: this.$route.query.location,
+            //beds: this.$route.query.beds,
+            //CANCEL
+            beds: 2,
+            //CANCEL END
+            rooms: 1,
+            range: 20,
+            coordinatesCenter: [],
+            lngMin: '',
+            lngMax: '',
+            latMin: '',
+            latMax: '',
+        };
+    },
+    methods: {
+        searchApartment() {
+            this.$router.replace({
+                query: ''
+            });
+            //console.log(this.location, this.beds);
+            axios({
+                method: 'get',
+                url: 'http://127.0.0.1:8000/api/apartments/search',
+                params: {
+                    beds: this.beds,
+                    location: this.location,
+                    rooms: this.rooms,
+                    range: this.range
+                }
+            })
+                .then(response => {
+                    //console.log(response);
+                    this.apartments = [];
+                    this.coordinatesCenter = [];
+                    let lngAll = [];
+                    let latAll = [];
+
+                    //console.log(this.apartments);
+
+                    this.apartments = response.data.result;
+                    //const allApartments = response.data.result.data;
+
+                    //console.log(this.apartments);
+                    this.coordinatesCenter = response.data.coordinates;
+
+                    if (this.apartments.length == 0) {
+                        this.lngMin = this.coordinatesCenter[0];
+                        this.lngMax = this.coordinatesCenter[0];
+
+                        this.latMin = this.coordinatesCenter[1];
+                        this.latMax = this.coordinatesCenter[1];
+                    } else {
+                        this.apartments.forEach(apartment => {
+                            lngAll.push(apartment.longitude);
+                        });
+                        lngAll.push(this.coordinatesCenter[0]);
+                        this.lngMin = Math.min.apply(Math, lngAll);
+                        this.lngMax = Math.max.apply(Math, lngAll);
+
+                        this.apartments.forEach(apartment => {
+                            latAll.push(apartment.latitude);
+                        });
+                        latAll.push(this.coordinatesCenter[1])
+                        this.latMin = Math.min.apply(Math, latAll);
+                        this.latMax = Math.max.apply(Math, latAll);
+                    }
+
+                    //console.log(this.coordinatesCenter);
+                    this.fetchMap();
+
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        },
+
+        fetchMap() {
+            let sw = new tt.LngLat(this.lngMin, this.latMax);
+            let ne = new tt.LngLat(this.lngMax, this.latMin);
+            let llb = new tt.LngLatBounds(sw, ne);
+            console.log(llb);
+
+            const map = tt.map({
+                key: 'udRMY8mFZ7o4kiJOvK0ShT9DEn82wGyT',
+                container: 'map',
+                center: this.coordinatesCenter,
+                zoom: 9
+            })
+
+            map.fitBounds(llb, {
+                padding: { top: 30, bottom: 10, left: 20, right: 20 },
+                maxZoom: 9
+            });
+
+            map.on('load', () => {
+                this.apartments.forEach(apartment => {
+                    const apartmentCoordinates = [apartment.longitude, apartment.latitude];
+                    new tt.Marker().setLngLat(apartmentCoordinates).addTo(map);
+                });
+                new tt.Marker({color: '#ff0000', scale: 0.75}).setLngLat(this.coordinatesCenter).addTo(map);
+            })
+
+        }
+    },
+    mounted() {
+        this.searchApartment()
+    },
+    components: { ApartmentCard }
+}
+</script>
+
 <template>
     <div class="d-flex">
         <div class="sidebar col-md-3 bg-light p-3">
@@ -45,7 +167,7 @@
                 </form>
             </div>
         </div>
-        <div class="col-md-9 my-3">
+        <div class="col-md-6 my-3">
             <div class="container">
                 <h1>Search results</h1>
                 <div class="row g-4">
@@ -56,66 +178,18 @@
                 </div>
             </div>
         </div>
+        <div class="sidebar col-md-3 bg-light">
+            <div class="position-fixed h-100">
+                <div id="map"></div>
+            </div>
+        </div>
 
     </div>
 </template>
 
-<script>
-import ApartmentCard from '../components/ApartmentCard.vue';
-import { state } from '../store';
-import axios from 'axios';
-
-
-export default {
-    name: 'AppSearch',
-    data() {
-        return {
-            state,
-            apartments: [],
-            location: this.$route.query.location,
-            beds: this.$route.query.beds,
-            rooms: 1,
-            range: 20
-        };
-    },
-    methods: {
-        searchApartment() {
-            this.$router.replace({
-                query: ''
-            });
-            //console.log(this.location, this.beds);
-            axios({
-                method: 'get',
-                url: 'http://127.0.0.1:8000/api/apartments/search',
-                params: {
-                    beds: this.beds,
-                    location: this.location,
-                    rooms: this.rooms,
-                    range: this.range
-                }
-            })
-                .then(response => {
-                    //console.log(response);
-                    this.apartments = [];
-
-                    //console.log(this.apartments);
-
-                    this.apartments = response.data.result;
-                    //const allApartments = response.data.result.data;
-
-                    //console.log(this.apartments);
-
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        }
-    },
-    mounted() {
-        this.searchApartment()
-    },
-    components: { ApartmentCard }
+<style lang="scss" scoped>
+#map {
+    width: 350px;
+    height: 350px;
 }
-</script>
-
-<style lang="scss" scoped></style>
+</style>
