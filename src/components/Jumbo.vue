@@ -1,8 +1,10 @@
 <script>
+import { state } from "../store";
 export default {
     name: 'Jumbo',
     data() {
         return {
+            state,
             location: '',
             beds: null
         }
@@ -23,7 +25,7 @@ export default {
                     <div>
                         <label for="location" class="form-label">Location</label>
                         <input type="text" class="form-control" name="location" id="location" placeholder="Location"
-                            v-model="location" />
+                            v-model="location" required/>
                     </div>
                     <div>
                         <label for="beds" class="form-label">Beds</label>
@@ -36,7 +38,7 @@ export default {
                         <!--                         <router-link to='/search' query: { beds: this.beds, city: this.city } })></router-link>
  -->
                         <router-link class="btn btn-primary"
-                            :to="{ path: '/search', query: { beds: (this.beds == null ? 1 : this.beds), location: this.location } }">Search</router-link>
+                            :to="{ path: '/search', query: { beds: (this.beds == null ? 1 : this.beds), location: (this.location == '' ? 'Roma' : this.location) } }">Search</router-link>
 
 
                     </div>
