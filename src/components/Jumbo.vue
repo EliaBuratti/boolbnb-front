@@ -4,7 +4,7 @@ export default {
     data() {
         return {
             location: '',
-            guests: null
+            beds: null
         }
     },
     methods: {
@@ -26,9 +26,9 @@ export default {
                             v-model="location" />
                     </div>
                     <div>
-                        <label for="guests" class="form-label">Guests</label>
-                        <input type="number" class="form-control" name="guests" id="guests" v-model="guests"
-                            placeholder="Guests" />
+                        <label for="beds" class="form-label">Beds</label>
+                        <input type="number" class="form-control" name="beds" id="beds" v-model="beds"
+                            placeholder="Beds" />
                     </div>
                     <div>
                         <!-- <button type="submit" class="btn btn-primary" @click.prevent="searchApartment()">Search</button> -->
@@ -36,7 +36,7 @@ export default {
                         <!--                         <router-link to='/search' query: { beds: this.beds, city: this.city } })></router-link>
  -->
                         <router-link class="btn btn-primary"
-                            :to="{ path: '/search', query: { guests: (this.guests == null ? 1 : this.guests), location: this.location } }">Search</router-link>
+                            :to="{ path: '/search', query: { beds: (this.beds == null ? 1 : this.beds), location: this.location } }">Search</router-link>
 
 
                     </div>

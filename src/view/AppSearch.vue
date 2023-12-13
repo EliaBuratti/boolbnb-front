@@ -11,22 +11,30 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="beds" class="form-label">Guests</label>
+                        <label for="beds" class="form-label">Beds</label>
                         <input type="number" class="form-control" name="beds" id="beds" placeholder="Beds number"
-                            :placeholder="this.guests" v-model="guests" />
+                            :placeholder="this.beds" v-model="beds" />
                     </div>
 
                     <div class="mb-3">
-                        <label for="range" class="form-label">Range</label>
-                        <input type="number" class="form-control" name="range" id="range" placeholder="Range" />
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" name="location" id="location" :placeholder="this.location"
+                            v-model="location" />
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="range" class="form-label">Range in km</label>
+                        <input type="number" class="form-control" name="range" id="range" :placeholder="this.range"
+                            v-model="range" />
                     </div>
 
                     <!-- Da implementare chiamata axios per recuperare servizi? -->
-                    <div class="form-check mb-3">
+                    <!-- <div class="form-check mb-3">
                         <div>Services</div>
                         <input class="form-check-input" type="checkbox" value="" id="services" />
                         <label class="form-check-label" for="services"> Default checkbox </label>
-                    </div>
+                    </div> -->
 
 
                     <button type="submit" class="btn btn-primary" @click.prevent="searchApartment()">
@@ -65,24 +73,29 @@ export default {
             state,
             apartments: [],
             location: this.$route.query.location,
-            guests: this.$route.query.guests,
-            rooms: 1
+            beds: this.$route.query.beds,
+            rooms: 1,
+            range: 20
         };
     },
     methods: {
         searchApartment() {
-            //console.log(this.location, this.guests);
+            this.$router.replace({
+                query: ''
+            });
+            //console.log(this.location, this.beds);
             axios({
                 method: 'get',
-                url: 'http://127.0.0.1:8000/api/apartments',
+                url: 'http://127.0.0.1:8000/api/apartments/search',
                 params: {
-                    beds: this.guests,
-                    city: this.location,
-                    rooms: this.rooms
+                    beds: this.beds,
+                    location: this.location,
+                    rooms: this.rooms,
+                    range: this.range
                 }
             })
                 .then(response => {
-                    // console.log(response);
+                    //console.log(response);
                     this.apartments = [];
 
                     //console.log(this.apartments);

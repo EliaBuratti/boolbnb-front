@@ -7,7 +7,7 @@ export const state = reactive({
     apartments: [],
 
     fetchData() {
-        axios.get('http://127.0.0.1:8000/api/apartments')
+        axios.get('http://127.0.0.1:8000/api/apartments-home')
             .then(response => {
                 console.log(response);
                 this.apartments = response.data.result;
