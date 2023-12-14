@@ -5,11 +5,11 @@ export default {
 </script>
 
 <template>
-    <footer class="bg-dark text-light py-3">
-        <div class="container">
-            <div class="row row-cols-md-2 row-cols-1 g-3 justify-content-between">
-                <span class="col">BoolBnB ©, 2023</span>
-                <div class="col d-flex justify-content-end github">
+    <footer class="bg-dark text-light sticky-bottom">
+        <div class="container h-100">
+            <div class="row row-cols-lg-2 row-cols-1 justify-content-between align-items-center h-100">
+                <span class="col d-flex justify-content-center justify-content-lg-start">BoolBnB ©, 2023</span>
+                <div class="col d-flex justify-content-center justify-content-lg-end github">
                     <a href="https://github.com/eliaburatti" class="me-3 nav-link hover" target=”_blank”>Elia Buratti</a>
                     <a href="https://github.com/carlofanelli" class="me-3 nav-link hover" target=”_blank”>Carlo Fanelli</a>
                     <a href="https://github.com/lucafranzoi98" class="me-3 nav-link hover" target=”_blank”>Luca Franzoi</a>
@@ -23,6 +23,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+footer{
+    height: 50px;
+}
+
 .github {
     font-size: 0.85rem;
 }

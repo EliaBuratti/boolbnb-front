@@ -1,33 +1,32 @@
 <template>
-    <div v-if="state.loading" class="vh-100 d-flex justify-content-center align-items-center">
-        <div>
-            <section class="loader">
+    <div v-if="state.loading" class="loading d-flex justify-content-center align-items-center">
+        <section class="loader">
+            <div>
                 <div>
-                    <div>
-                        <span class="one h6"></span>
-                        <span class="two h3"></span>
-                    </div>
+                    <span class="one h6"></span>
+                    <span class="two h3"></span>
                 </div>
+            </div>
 
+            <div>
                 <div>
-                    <div>
-                        <span class="one h1"></span>
-                    </div>
+                    <span class="one h1"></span>
                 </div>
+            </div>
 
+            <div>
                 <div>
-                    <div>
-                        <span class="two h2"></span>
-                    </div>
+                    <span class="two h2"></span>
                 </div>
+            </div>
+            <div>
                 <div>
-                    <div>
-                        <span class="one h4"></span>
-                    </div>
+                    <span class="one h4"></span>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
     </div>
+    
     <div v-else>
         <Jumbo></Jumbo>
 
@@ -65,5 +64,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
