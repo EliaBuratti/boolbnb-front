@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex">
         <div class="sidebar col-md-3 bg-light p-3">
-            <div class="position-fixed h-100">
+            <div class=" h-100">
                 <h3>Filters</h3>
                 <form action="#" method="get">
                     <div class="mb-3">
@@ -28,6 +28,15 @@
                         <input type="number" class="form-control" name="range" id="range" :placeholder="this.range"
                             v-model="range" />
                     </div>
+
+                    <div class="form-check mb-3">
+                        <div v-for="(service, i) in state.services"> <!-- :key="item.id" -->
+                            <input class="form-check-input" type="checkbox" :value="service.slug" :id="service.slug"
+                                v-model="queryServices" />
+                            <label class="form-check-label" :for="service.slug"> {{ service.name }} </label>
+                        </div>
+                    </div>
+
 
                     <!-- Da implementare chiamata axios per recuperare servizi? -->
                     <!-- <div class="form-check mb-3">
@@ -72,6 +81,7 @@ export default {
         return {
             state,
             apartments: [],
+            queryServices: [],
             location: this.$route.query.location,
             beds: this.$route.query.beds,
             rooms: 1,
@@ -79,11 +89,13 @@ export default {
         };
     },
     methods: {
+
         searchApartment() {
             this.$router.replace({
                 query: ''
             });
-            //console.log(this.location, this.beds);
+            console.log(this.queryServices);
+
             axios({
                 method: 'get',
                 url: 'http://127.0.0.1:8000/api/apartments/search',
@@ -91,11 +103,19 @@ export default {
                     beds: this.beds,
                     location: this.location,
                     rooms: this.rooms,
-                    range: this.range
+                    range: this.range,
+                    services: this.queryServices
+                },
+                paramsSerializer: {
+                    indexes: true,
                 }
             })
                 .then(response => {
-                    //console.log(response);
+                    axios.interceptors.request.use(request => {
+                        console.log('Starting Request', JSON.stringify(request, null, 2))
+                        return request
+                    })
+
                     this.apartments = [];
 
                     //console.log(this.apartments);

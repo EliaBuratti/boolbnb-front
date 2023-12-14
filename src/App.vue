@@ -13,6 +13,10 @@ export default {
         AppHeader,
         AppFooter
     },
+    mounted() {
+        state.fetchServices()
+    }
+
 
 }
 </script>
