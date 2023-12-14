@@ -42,10 +42,7 @@ export default {
                 }
             })
                 .then(response => {
-                    axios.interceptors.request.use(request => {
-                        console.log('Starting Request', JSON.stringify(request, null, 2))
-                        return request
-                    })
+
                     this.apartments = [];
                     this.coordinatesCenter = [];
                     let lngAll = [];
@@ -113,7 +110,7 @@ export default {
                     const apartmentCoordinates = [apartment.longitude, apartment.latitude];
                     new tt.Marker().setLngLat(apartmentCoordinates).addTo(map);
                 });
-                new tt.Marker({color: '#ffde59', scale: 0.75}).setLngLat(this.coordinatesCenter).addTo(map);
+                new tt.Marker({ color: '#ffde59', scale: 0.75 }).setLngLat(this.coordinatesCenter).addTo(map);
             })
 
         }
