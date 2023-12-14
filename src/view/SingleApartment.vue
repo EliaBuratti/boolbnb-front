@@ -34,8 +34,8 @@ export default {
                     this.coordinates.push(this.lng, this.lat);
                     this.fetchMap();
                     this.loading = false;
-                    this.apartmentID = apartment.id;
-                    this.mailSubject = `information about ${apartment.title}`
+                    this.apartmentID = response.data.result.id;
+                    this.mailSubject = `information about ${response.data.result.title}`
 
                 })
                 .catch(error => {
@@ -84,7 +84,7 @@ export default {
         sendMessages() {
             axios({
                 method: 'post',
-                url: '',
+                url: 'http://127.0.0.1:8000/api/messages',
                 params: {
                     apartment_id: this.apartmentID,
                     name: this.contactName,
@@ -99,7 +99,11 @@ export default {
                 .catch(error => {
                     console.log(error);
                 })
+            this.contactName = '';
+            this.contactMail = '';
+            this.mailBody = '';
         }
+
 
     },
     mounted() {
@@ -265,7 +269,7 @@ export default {
                     <div class="col">
                         <div class="rounded-5 py-4 px-5 shadow bg-dark text-white">
                             <h3 class="text-center primary fw-semibold">Contact me</h3>
-                            <form action="" method="post">
+                            <form @submit.prevent="sendMessages()" method="post">
 
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
@@ -295,7 +299,6 @@ export default {
                                 </div>
 
                             </form>
-
                         </div>
 
                     </div>
