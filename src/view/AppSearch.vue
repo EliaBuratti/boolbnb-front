@@ -152,7 +152,7 @@ export default {
                 </div>
             </div>
         </section> -->
-        <!-- <div class="loading bg-white w-100 position-absolute">
+    <!-- <div class="loading bg-white w-100 position-absolute">
             Loading
         </div> -->
 
@@ -160,98 +160,102 @@ export default {
 
 
 
-        <div class="row">
+    <div class="d-flex">
 
-            <!-- Sidebar -->
-            <div class="col-3 bg-light sidebar">
+        <!-- Sidebar -->
+        <div class="col-3 bg-light sidebar p-3">
 
-                    <h3>Filters</h3>
-                    <form action="#" method="get">
-                        <div class="mb-3">
-                            <label for="rooms" class="form-label">Rooms</label>
-                            <input type="number" class="form-control" name="rooms" id="rooms" v-model="rooms"
-                                :placeholder="(this.rooms !== null ? this.rooms : 'Rooms number')" />
-                        </div>
+            <h5>Filters</h5>
+            <form action="#" method="get">
+                <div class="row row-cols-1 row-cols-lg-2 mb-3">
+                    <div class="col">
+                        <label for="rooms" class="form-label">Rooms</label>
+                        <input type="number" class="form-control" name="rooms" id="rooms" v-model="rooms"
+                            :placeholder="(this.rooms !== null ? this.rooms : 'Rooms number')" />
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="beds" class="form-label">Beds</label>
-                            <input type="number" class="form-control" name="beds" id="beds" placeholder="Beds number"
-                                :placeholder="this.beds" v-model="beds" />
-                        </div>
+                    <div class="col">
+                        <label for="beds" class="form-label">Beds</label>
+                        <input type="number" class="form-control" name="beds" id="beds" placeholder="Beds number"
+                            :placeholder="this.beds" v-model="beds" />
+                    </div>
+                </div>
 
-                        <div class="mb-3">
-                            <label for="location" class="form-label">Location</label>
-                            <input type="text" class="form-control" name="location" id="location"
-                                :placeholder="this.location" v-model="location" />
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="range" class="form-label">Range in km</label>
-                            <input type="number" class="form-control" name="range" id="range" :placeholder="this.range"
-                                v-model="range" />
-                        </div>
-
-                        <div class="form-check mb-3">
-                            <div v-for="(service, i) in state.services"> <!-- :key="item.id" -->
-                                <input class="form-check-input" type="checkbox" :value="service.slug" :id="service.slug"
-                                    v-model="queryServices" />
-                                <label class="form-check-label" :for="service.slug"> {{ service.name }} </label>
-                            </div>
-                        </div>
+                <div class="row mb-3">
+                    <div class="col-12 col-xl-7">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" name="location" id="location" :placeholder="this.location"
+                            v-model="location" />
+                    </div>
 
 
-                        <!-- Da implementare chiamata axios per recuperare servizi? -->
-                        <!-- <div class="form-check mb-3">
+                    <div class="col-12 col-xl-5">
+                        <label for="range" class="form-label">Range (km)</label>
+                        <input type="number" class="form-control" name="range" id="range" :placeholder="this.range"
+                            v-model="range" />
+                    </div>
+                </div>
+
+
+
+                <div class="mb-2">Services</div>
+                <div class="form-check mb-3">
+
+                    <div v-for="(service, i) in state.services"> <!-- :key="item.id" -->
+                        <input class="form-check-input" type="checkbox" :value="service.slug" :id="service.slug"
+                            v-model="queryServices" />
+                        <label class="form-check-label" :for="service.slug"> {{ service.name }} </label>
+                    </div>
+                </div>
+
+
+                <!-- Da implementare chiamata axios per recuperare servizi? -->
+                <!-- <div class="form-check mb-3">
                         <div>Services</div>
                         <input class="form-check-input" type="checkbox" value="" id="services" />
                         <label class="form-check-label" for="services"> Default checkbox </label>
                     </div> -->
 
 
-                        <button type="submit" class="btn btn-primary" @click.prevent="searchApartment()">
-                            Submit
-                        </button>
+                <button type="submit" class="btn primary fw-semibold btn-send" @click.prevent="searchApartment()">
+                    Search
+                </button>
 
 
-                    </form>
-            </div>
+            </form>
+        </div>
 
-            <!-- Results -->
-            <div class="col-6 results">
-                <div class="container">
-                    <h1>Search results</h1>
-                    <div class="row g-4">
-                        <!-- Da cambiare con i risultati -->
-                        <div class="col-4" v-for=" apartment  in  apartments ">
-                            <ApartmentCard :apartment="apartment"></ApartmentCard>
-                        </div>
+        <!-- Results -->
+        <div class="col-6 results">
+            <div class="p-3">
+                <h5>Search results</h5>
+                <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-3">
+                    <div class="col" v-for=" apartment  in  apartments ">
+                        <ApartmentCard :apartment="apartment"></ApartmentCard>
                     </div>
                 </div>
             </div>
-            <div class="sidebar col-md-3 bg-light">
-                <div class="position-fixed h-100">
-                    <div id="map"></div>
-                </div>
-            </div>
+        </div>
+
+        <!-- Map -->
+        <div class="sidebar col-3">
+
+            <div id="map" class="w-100 h-100"></div>
 
         </div>
+
+    </div>
 </template>
 
 
 <style lang="scss" scoped>
-#map {
-    width: 350px;
-    height: 350px;
-}
-
 .loading {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
 }
 
-.sidebar, .results{
+.sidebar, .results {
     position: relative;
     top: 0;
     left: 0;
@@ -259,26 +263,32 @@ export default {
     overflow: auto;
 }
 
-
-
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+    background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #ffde59;
+    background: #ffde59;
 
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #ffc259; 
+    background: #ffc259;
+}
+
+.btn-send {
+    border: 2px solid #ffde59;
+
+    &:hover {
+        background-color: #ffde59;
+    }
 }
 </style>
