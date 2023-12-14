@@ -15,7 +15,8 @@ export default {
             contactName: null,
             contactMail: null,
             mailSubject: null,
-            mailBody: null
+            mailBody: null,
+            responseMessage: null
         }
     },
     methods: {
@@ -94,7 +95,7 @@ export default {
                 },
             })
                 .then(response => {
-                    console.log(response);
+                    this.responseMessage = response.data.message;
                 })
                 .catch(error => {
                     console.log(error);
@@ -102,6 +103,7 @@ export default {
             this.contactName = '';
             this.contactMail = '';
             this.mailBody = '';
+            this.responseMessage = null;
         }
 
 
@@ -269,18 +271,27 @@ export default {
                     <div class="col-xxl-8 col-12">
                         <div class="rounded-5 py-4 px-5 shadow bg-dark text-white">
                             <h3 class="text-center primary fw-semibold">Contact me</h3>
+
+                            <div v-if="this.responseMessage !== null"
+                                class="alert alert-success alert-dismissible fade show" role="alert">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                                    @click="this.responseMessage = null"></button>
+                                <strong> Thanks!</strong> {{ this.responseMessage }}
+                            </div>
+
+
                             <form @submit.prevent="sendMessages()" method="post">
 
                                 <div class="row row-cols-md-2 row-cols-1 g-3">
                                     <div class="col">
                                         <label for="name" class="form-label">Name</label>
                                         <input type="text" class="form-control" name="name" id="name" placeholder="name"
-                                            v-model="this.contactName" />
+                                            v-model="this.contactName" required />
                                     </div>
                                     <div class="col">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="email" class="form-control" name="email" id="email"
-                                            placeholder="insert your mail" v-model="contactMail" />
+                                            placeholder="insert your mail" v-model="contactMail" required />
 
                                     </div>
                                 </div>
