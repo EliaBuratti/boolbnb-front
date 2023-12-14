@@ -112,7 +112,7 @@ export default {
     <main>
         <div id="carousel">
 
-            <div class="carousel-content h-100 w-100 d-flex justify-content-center align-items-center">
+            <div class="carousel-content w-100 d-flex justify-content-center align-items-center">
                 <div class="close" @click="carouselClose()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
                         class="bi bi-x-square-fill" viewBox="0 0 16 16">
@@ -246,7 +246,7 @@ export default {
                 </div>
 
 
-                <div class="mb-4">
+                <div class="mb-5">
                     <h4 class="mb-3">Services</h4>
                     <div class="d-flex gap-2 flex-wrap">
                         <div class="badge bg_primary text-dark" v-for="service in apartment.services">
@@ -255,32 +255,35 @@ export default {
                     </div>
                 </div>
 
-                <div class="row row-cols-1 row-cols-lg-2 align-items-center mb-4 g-5">
-                    <div class="col">
-                        <div>
-                            <h4>Position</h4>
-                            <div id="map" class="rounded-5"></div>
-                        </div>
+                <div class="row align-items-center g-4">
+                    <div class="col-xxl-4 col-12">
+                        <h4>Position</h4>
+                        <div id="map" class="rounded-5"></div>
                     </div>
-                    <div class="col">
+
+
+                    <div class="col-xxl-8 col-12">
                         <div class="rounded-5 py-4 px-5 shadow bg-dark text-white">
                             <h3 class="text-center primary fw-semibold">Contact me</h3>
                             <form action="" method="post">
 
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" name="name" id="name" placeholder="name"
-                                        v-model="this.contactName" />
+                                <div class="row row-cols-md-2 row-cols-1 g-3">
+                                    <div class="col">
+                                        <label for="name" class="form-label">Name</label>
+                                        <input type="text" class="form-control" name="name" id="name" placeholder="name"
+                                            v-model="this.contactName" />
+                                    </div>
+                                    <div class="col">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" name="email" id="email"
+                                            placeholder="insert your mail" v-model="contactMail" />
+
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" name="email" id="email"
-                                        placeholder="insert your mail" v-model="contactMail" />
-
-                                </div>
 
 
-                                <div class="mb-3">
+
+                                <div class="my-3">
                                     <label for="messagge" class="form-label fw-medium">Message</label>
                                     <textarea class="form-control" name="messagge" id="messagge" rows="3"
                                         placeholder="Type your messagge" required v-model="this.mailBody"></textarea>
@@ -351,11 +354,17 @@ img {
         background: #0000006b;
         z-index: 2;
         position: fixed;
+        height: calc(100% - 110px);
 
         & .carousel_img {
             max-height: 80%;
             object-fit: contain;
         }
     }
+}
+
+#map {
+    width: 400px;
+    height: 300px;
 }
 </style>

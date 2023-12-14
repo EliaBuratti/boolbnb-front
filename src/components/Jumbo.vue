@@ -35,7 +35,7 @@ export default {
                     </div>
                     <div>
                         <router-link class="btn primary fw-semibold btn-send"
-                            :to="{ path: '/search', query: { beds: (this.beds == null ? 1 : this.beds), location: (this.location == null ? 'Roma' : this.location) } }">Search</router-link>
+                            :to="{ path: '/search', query: { beds: (this.beds == null ? 1 : this.beds), location: (this.location == '' ? 'Roma' : this.location) } }">Search</router-link>
                     </div>
                 </div>
             </form>
