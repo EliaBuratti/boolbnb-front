@@ -1,17 +1,12 @@
 <template>
-    <div class="my_card shadow">
-        <img class="image" :src="this.baseURL + '/' + apartment.thumbnail" alt="">
-        <div class="my_card_content">
-            <span class="my_card_title">
-                <h3>{{ apartment.title }}</h3>
-            </span>
-            <span class="my_card_subtitle">
-                <h5>{{ apartment.city }}</h5>
-            </span>
-            <!--                 <p class="my_card_description">{{ apartment.description }}</p>
- -->
+    <router-link :to="{ name: 'apartment', params: { slug: apartment.slug } }">
+        <div class="my_card shadow">
+            <img class="image" :src="this.baseURL + '/' + apartment.thumbnail" alt="">
+            <div class="my_card_content">
+                <h6 class="fw-semibold text-dark">{{ apartment.title }}</h6>
+            </div>
         </div>
-    </div>
+    </router-link>
 </template>
 
 <script>
@@ -34,41 +29,29 @@ export default {
     position: relative;
     width: 100%;
     aspect-ratio: 1;
-    color: #2e2d31;
-    background: #131313;
     overflow: hidden;
     border-radius: 20px;
 
     .image {
+        object-fit: cover;
+        width: 100%;
         height: 100%;
-        aspect-ratio: 1;
     }
-}
-
-.temporary_text {
-    font-weight: bold;
-    font-size: 24px;
-    padding: 6px 12px;
-    color: #f8f8f8;
-}
-
-.my_card_title {
-    font-weight: bold;
 }
 
 .my_card_content {
     position: absolute;
     left: 0;
     bottom: 0;
-    /* edit the width to fit my_card */
     width: 100%;
-    padding: 20px;
+    padding: 1rem;
     padding-right: 2rem;
     background: #f2f2f2;
     border-top-left-radius: 20px;
     /* edit here to change the height of the content box */
-    transform: translateY(100%);
+    transform: translateY(90%);
     transition: transform .25s;
+    border-top: 5px solid #ffde59;
 }
 
 .my_card_content::before {
@@ -83,29 +66,7 @@ export default {
     box-shadow: inset 48px 48px #f2f2f2;
 }
 
-.my_card_title {
-    color: #131313;
-    line-height: 15px;
-}
-
-.my_card_subtitle {
-    display: block;
-    font-size: 12px;
-    margin-bottom: 10px;
-}
-
-.my_card_description {
-    font-size: 14px;
-    opacity: 0;
-    transition: opacity .5s;
-}
-
 .my_card:hover .my_card_content {
     transform: translateY(0);
-}
-
-.my_card:hover .my_card_description {
-    opacity: 1;
-    transition-delay: .25s;
 }
 </style>

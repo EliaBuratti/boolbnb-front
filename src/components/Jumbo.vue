@@ -1,8 +1,10 @@
 <script>
+import { state } from "../store";
 export default {
     name: 'Jumbo',
     data() {
         return {
+            state,
             location: '',
             beds: null
         }
@@ -17,35 +19,26 @@ export default {
 <template>
     <div class="jumbo py-5 d-flex justify-content-center">
         <div class="search-card p-5">
-            <h3 class="text-center">Where do you want to go?</h3>
-            <form action="" method="get">
-                <div class="d-flex gap-3 align-items-end">
+            <h3 class="text-center fw-bold mb-4">Search your next <strong class="primary">holiday</strong></h3>
+
+            <form method="get">
+                <div class="d-md-flex gap-3 align-items-end">
                     <div>
-                        <label for="location" class="form-label">Location</label>
-                        <input type="text" class="form-control" name="location" id="location" placeholder="Location"
-                            v-model="location" />
+                        <label for="location" class="form-label fw-semibold">Location</label>
+                        <input type="text" class="form-control" name="location" id="location" placeholder="Where?"
+                            v-model="location" required />
                     </div>
-                    <div>
+                    <div class="mb-3 mb-md-0">
                         <label for="beds" class="form-label">Beds</label>
                         <input type="number" class="form-control" name="beds" id="beds" v-model="beds"
-                            placeholder="Beds" />
+                            placeholder="How many?" />
                     </div>
                     <div>
-                        <!-- <button type="submit" class="btn btn-primary" @click.prevent="searchApartment()">Search</button> -->
-                        <!-- <button type="submit" class="btn btn-primary" @click.prevent="advanceSearch()">Search</button> -->
-                        <!--                         <router-link to='/search' query: { beds: this.beds, city: this.city } })></router-link>
- -->
-                        <router-link class="btn btn-primary"
-                            :to="{ path: '/search', query: { beds: (this.beds == null ? 1 : this.beds), location: this.location } }">Search</router-link>
-
-
+                        <router-link class="btn primary fw-semibold btn-send"
+                            :to="{ path: '/search', query: { beds: (this.beds == null ? 1 : this.beds), location: (this.location == null ? 'Roma' : this.location) } }">Search</router-link>
                     </div>
                 </div>
-
             </form>
-
-
-
         </div>
     </div>
 </template>
@@ -62,5 +55,13 @@ export default {
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
+}
+
+.btn-send {
+    border: 2px solid #ffde59;
+
+    &:hover {
+        background-color: #ffde59;
+    }
 }
 </style>
