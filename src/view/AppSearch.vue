@@ -9,6 +9,7 @@ export default {
         return {
             state,
             apartments: [],
+            queryServices: [],
             location: this.$route.query.location,
             beds: this.$route.query.beds,
             rooms: 1,
@@ -25,7 +26,7 @@ export default {
             this.$router.replace({
                 query: ''
             });
-            //console.log(this.location, this.beds);
+
             axios({
                 method: 'get',
                 url: 'http://127.0.0.1:8000/api/apartments/search',
@@ -33,11 +34,18 @@ export default {
                     beds: this.beds,
                     location: this.location,
                     rooms: this.rooms,
-                    range: this.range
+                    range: this.range,
+                    services: this.queryServices
+                },
+                paramsSerializer: {
+                    indexes: true,
                 }
             })
                 .then(response => {
-                    //console.log(response);
+                    axios.interceptors.request.use(request => {
+                        console.log('Starting Request', JSON.stringify(request, null, 2))
+                        return request
+                    })
                     this.apartments = [];
                     this.coordinatesCenter = [];
                     let lngAll = [];
@@ -194,72 +202,6 @@ export default {
     </div>
 </template>
 
-<script>
-import ApartmentCard from '../components/ApartmentCard.vue';
-import { state } from '../store';
-import axios from 'axios';
-
-
-export default {
-    name: 'AppSearch',
-    data() {
-        return {
-            state,
-            apartments: [],
-            queryServices: [],
-            location: this.$route.query.location,
-            beds: this.$route.query.beds,
-            rooms: 1,
-            range: 20
-        };
-    },
-    methods: {
-
-        searchApartment() {
-            this.$router.replace({
-                query: ''
-            });
-            console.log(this.queryServices);
-
-            axios({
-                method: 'get',
-                url: 'http://127.0.0.1:8000/api/apartments/search',
-                params: {
-                    beds: this.beds,
-                    location: this.location,
-                    rooms: this.rooms,
-                    range: this.range,
-                    services: this.queryServices
-                },
-                paramsSerializer: {
-                    indexes: true,
-                }
-            })
-                .then(response => {
-                    axios.interceptors.request.use(request => {
-                        console.log('Starting Request', JSON.stringify(request, null, 2))
-                        return request
-                    })
-
-                    this.apartments = [];
-
-                    //console.log(this.apartments);
-
-                    this.apartments = response.data.result;
-                    //const allApartments = response.data.result.data;
-
-                    //console.log(this.apartments);
-
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        }
-    },
-    mounted() {
-        this.searchApartment()
-    },
-    components: { ApartmentCard }
 
 <style lang="scss" scoped>
 #map {
