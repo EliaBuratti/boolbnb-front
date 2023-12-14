@@ -8,6 +8,8 @@ export default {
     data() {
         return {
             loading: true,
+            validInput: true,
+            results: null,
             state,
             apartments: [],
             queryServices: [],
@@ -24,6 +26,7 @@ export default {
     },
     methods: {
         searchApartment() {
+            this.loading = true;
             this.$router.replace({
                 query: ''
             });
@@ -44,43 +47,55 @@ export default {
             })
                 .then(response => {
 
-                    this.apartments = [];
-                    this.coordinatesCenter = [];
-                    let lngAll = [];
-                    let latAll = [];
-                    //console.log(this.apartments);
-
-                    this.apartments = response.data.result;
-                    //const allApartments = response.data.result.data;
-
-                    //console.log(this.apartments);
-                    this.coordinatesCenter = response.data.coordinates;
-                    console.log(this.coordinatesCenter);
-
-                    if (this.apartments.length == 0) {
-                        this.lngMin = this.coordinatesCenter[0];
-                        this.lngMax = this.coordinatesCenter[0];
-
-                        this.latMin = this.coordinatesCenter[1];
-                        this.latMax = this.coordinatesCenter[1];
+                    if (response.data.result == 'Nothing address found') {
+                        this.validInput = false;
+                        this.results = 0;
                     } else {
-                        this.apartments.forEach(apartment => {
-                            lngAll.push(apartment.longitude);
-                        });
-                        lngAll.push(this.coordinatesCenter[0]);
-                        this.lngMin = Math.min.apply(Math, lngAll);
-                        this.lngMax = Math.max.apply(Math, lngAll);
+                        this.validInput = true;
 
-                        this.apartments.forEach(apartment => {
-                            latAll.push(apartment.latitude);
-                        });
-                        latAll.push(this.coordinatesCenter[1])
-                        this.latMin = Math.min.apply(Math, latAll);
-                        this.latMax = Math.max.apply(Math, latAll);
+                        this.apartments = [];
+                        this.coordinatesCenter = [];
+                        let lngAll = [];
+                        let latAll = [];
+                        //console.log(this.apartments);
+
+                        this.apartments = response.data.result;
+                        //const allApartments = response.data.result.data;
+
+                        //console.log(this.apartments);
+                        this.coordinatesCenter = response.data.coordinates;
+                        //console.log(this.coordinatesCenter);
+
+                        if (this.apartments.length == 0) {
+                            this.lngMin = this.coordinatesCenter[0];
+                            this.lngMax = this.coordinatesCenter[0];
+
+                            this.latMin = this.coordinatesCenter[1];
+                            this.latMax = this.coordinatesCenter[1];
+                        } else {
+                            this.apartments.forEach(apartment => {
+                                lngAll.push(apartment.longitude);
+                            });
+                            lngAll.push(this.coordinatesCenter[0]);
+                            this.lngMin = Math.min.apply(Math, lngAll);
+                            this.lngMax = Math.max.apply(Math, lngAll);
+
+                            this.apartments.forEach(apartment => {
+                                latAll.push(apartment.latitude);
+                            });
+                            latAll.push(this.coordinatesCenter[1])
+                            this.latMin = Math.min.apply(Math, latAll);
+                            this.latMax = Math.max.apply(Math, latAll);
+                        }
+
+                        this.results = this.apartments.length;
+
+                        //console.log(this.coordinatesCenter);
+                        this.fetchMap();
+
                     }
 
-                    //console.log(this.coordinatesCenter);
-                    this.fetchMap();
+                    this.loading = false;
 
                 })
                 .catch(error => {
@@ -92,7 +107,7 @@ export default {
             let sw = new tt.LngLat(this.lngMin, this.latMax);
             let ne = new tt.LngLat(this.lngMax, this.latMin);
             let llb = new tt.LngLatBounds(sw, ne);
-            console.log(llb);
+            //console.log(llb);
 
             const map = tt.map({
                 key: 'udRMY8mFZ7o4kiJOvK0ShT9DEn82wGyT',
@@ -113,9 +128,7 @@ export default {
                 });
                 new tt.Marker({ color: '#ffde59', scale: 0.75 }).setLngLat(this.coordinatesCenter).addTo(map);
             })
-            console.log(this.loading);
-            this.loading = false;
-
+            //console.log(this.loading);
         }
     },
     mounted() {
@@ -127,39 +140,6 @@ export default {
 </script>
 
 <template>
-    <!-- <section class="loader">
-            <div>
-                <div>
-                    <span class="one h6"></span>
-                    <span class="two h3"></span>
-                </div>
-            </div>
-
-            <div>
-                <div>
-                    <span class="one h1"></span>
-                </div>
-            </div>
-
-            <div>
-                <div>
-                    <span class="two h2"></span>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <span class="one h4"></span>
-                </div>
-            </div>
-        </section> -->
-    <!-- <div class="loading bg-white w-100 position-absolute">
-            Loading
-        </div> -->
-
-
-
-
-
     <div class="d-flex">
 
         <!-- Sidebar -->
@@ -226,14 +206,20 @@ export default {
         </div>
 
         <!-- Results -->
-        <div class="col-6 results">
+        <div class="col-6 results position-relative">
             <div class="p-3">
                 <h5>Search results</h5>
-                <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-3">
+                <h6 v-show="loading == false">{{ results }} results</h6>
+                <div v-show="validInput == true" class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-3">
                     <div class="col" v-for=" apartment  in  apartments ">
                         <ApartmentCard :apartment="apartment"></ApartmentCard>
                     </div>
                 </div>
+                <div v-show="validInput == false">Invalid Input</div>
+            </div>
+
+            <div v-show="loading == true" class="loader text-white rounded-5 p-5">
+                LOADING
             </div>
         </div>
 
@@ -255,7 +241,8 @@ export default {
     transform: translate(-50%, -50%);
 }
 
-.sidebar, .results {
+.sidebar,
+.results {
     position: relative;
     top: 0;
     left: 0;
@@ -290,5 +277,12 @@ export default {
     &:hover {
         background-color: #ffde59;
     }
+}
+
+.loader{
+    top: 100px;
+    left: 50%;
+    transform: translate(0, -50%);
+    background-color: #ffde59;
 }
 </style>
