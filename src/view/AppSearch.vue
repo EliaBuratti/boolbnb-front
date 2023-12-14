@@ -50,7 +50,6 @@ export default {
                     this.coordinatesCenter = [];
                     let lngAll = [];
                     let latAll = [];
-
                     //console.log(this.apartments);
 
                     this.apartments = response.data.result;
