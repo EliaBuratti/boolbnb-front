@@ -197,7 +197,8 @@ export default {
                     </div> -->
 
 
-                <button type="submit" class="btn primary fw-semibold btn-send" @click.prevent="searchApartment()">
+                <button type="submit" class="btn primary fw-semibold btn-send" @click.prevent="searchApartment()"
+                    :disabled="location === ''">
                     Search
                 </button>
 
@@ -211,7 +212,7 @@ export default {
                 <h5>Search results</h5>
                 <h6 v-show="loading == false">{{ results }} results</h6>
                 <div v-show="validInput == true" class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-3">
-                    <div class="col" v-for=" apartment  in  apartments ">
+                    <div class="col" v-for="  apartment   in   apartments  ">
                         <ApartmentCard :apartment="apartment"></ApartmentCard>
                     </div>
                 </div>
@@ -279,7 +280,7 @@ export default {
     }
 }
 
-.loader{
+.loader {
     top: 100px;
     left: 50%;
     transform: translate(0, -50%);
