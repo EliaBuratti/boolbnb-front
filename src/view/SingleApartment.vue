@@ -16,7 +16,8 @@ export default {
             contactMail: null,
             mailSubject: null,
             mailBody: null,
-            responseMessage: null
+            responseMessage: null,
+            ip: ''
         }
     },
     methods: {
@@ -104,12 +105,38 @@ export default {
             this.contactMail = '';
             this.mailBody = '';
             this.responseMessage = null;
+        },
+        viewsCounter() {
+            axios.get('https://api.ipify.org/')
+                .then(response => {
+                    //console.log(response.data);
+                    this.ip = response.data;
+                    //console.log(this.ip);
+                    axios({
+                        method: 'post',
+                        url: 'http://127.0.0.1:8000/api/views',
+                        params: {
+                            apartment_id: this.apartmentID,
+                            ip_adress: this.ip,
+                        }
+                    })
+                        .then(response => {
+                            console.log(response);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                });
+            //console.log(this.ip);
+
         }
 
 
     },
     mounted() {
-        this.fetchSingleApartment();
+        this.fetchSingleApartment(),
+            this.viewsCounter()
+
     }
 }
 </script>

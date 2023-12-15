@@ -129,10 +129,11 @@ export default {
                 new tt.Marker({ color: '#ffde59', scale: 0.75 }).setLngLat(this.coordinatesCenter).addTo(map);
             })
             //console.log(this.loading);
-        }
+        },
+
     },
     mounted() {
-        console.log(this.loading);
+        //console.log(this.loading);
         this.searchApartment()
     },
     components: { ApartmentCard }
