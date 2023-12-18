@@ -153,9 +153,9 @@ export default {
                     </div>
 
                     <div class="col">
-                        <label for="beds" min="1" max="25" class="form-label">Beds</label>
-                        <input type="number" class="form-control" name="beds" id="beds" placeholder="Beds number"
-                            :placeholder="this.beds" v-model="beds" />
+                        <label for="beds" class="form-label">Beds</label>
+                        <input type="number" min="1" max="25" class="form-control" name="beds" id="beds"
+                            placeholder="Beds number" :placeholder="this.beds" v-model="beds" />
                     </div>
                 </div>
 
