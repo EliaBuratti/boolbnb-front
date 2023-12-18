@@ -148,12 +148,12 @@ export default {
                 <div class="row row-cols-1 row-cols-lg-2 mb-3">
                     <div class="col">
                         <label for="rooms" class="form-label">Rooms</label>
-                        <input type="number" class="form-control" name="rooms" id="rooms" v-model="rooms"
+                        <input type="number" min="1" max="25" class="form-control" name="rooms" id="rooms" v-model="rooms"
                             :placeholder="(this.rooms !== null ? this.rooms : 'Rooms number')" />
                     </div>
 
                     <div class="col">
-                        <label for="beds" class="form-label">Beds</label>
+                        <label for="beds" min="1" max="25" class="form-label">Beds</label>
                         <input type="number" class="form-control" name="beds" id="beds" placeholder="Beds number"
                             :placeholder="this.beds" v-model="beds" />
                     </div>
@@ -169,8 +169,8 @@ export default {
 
                     <div class="col-12 col-xl-5">
                         <label for="range" class="form-label">Range (km)</label>
-                        <input type="number" class="form-control" name="range" id="range" :placeholder="this.range"
-                            v-model="range" />
+                        <input type="number" min="1" max="2000" class="form-control" name="range" id="range"
+                            :placeholder="this.range" v-model="range" />
                     </div>
                 </div>
 
