@@ -26,7 +26,7 @@
             </div>
         </section>
     </div>
-    
+
     <div v-else>
         <Jumbo></Jumbo>
 
@@ -34,7 +34,7 @@
             <div class="container">
                 <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 g-4">
                     <div class="col" v-for="apartment in state.apartments">
-                        <ApartmentCard :apartment="apartment"></ApartmentCard>
+                        <ApartmentCard :apartment="apartment" :sponsored="this.state.sponsored"></ApartmentCard>
                     </div>
                 </div>
             </div>

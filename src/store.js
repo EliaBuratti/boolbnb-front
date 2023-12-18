@@ -7,14 +7,16 @@ export const state = reactive({
     apartments: [],
     services: [],
     loading: true,
+    sponsered: [],
 
     fetchData() {
         axios.get('http://127.0.0.1:8000/api/apartments-home')
             .then(response => {
                 //console.log(response);
                 this.apartments = response.data.result;
-                //console.log(this.apartments);
+                this.sponsored = response.data.sponsored;
                 this.loading = false;
+                console.log(this.apartments);
             })
             .catch(error => {
                 console.log(error);

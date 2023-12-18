@@ -1,9 +1,13 @@
 <template>
     <router-link :to="{ name: 'apartment', params: { slug: apartment.slug } }">
-        <div class="my_card shadow">
+        <div class="my_card shadow" :class="sponsored.includes(apartment.id) ? 'sponsored' : ''">
             <img class="image" :src="this.baseURL + '/' + apartment.thumbnail" alt="">
             <div class="my_card_content">
                 <h6 class="fw-semibold text-dark">{{ apartment.title }}</h6>
+            </div>
+
+            <div class="sponsored_badge">
+                Sponsored
             </div>
         </div>
     </router-link>
@@ -19,7 +23,8 @@ export default {
         }
     },
     props: {
-        'apartment': Object
+        'apartment': Object,
+        'sponsored': Object
     },
 }
 </script>
@@ -37,6 +42,28 @@ export default {
         width: 100%;
         height: 100%;
     }
+
+    &.sponsored {
+        .sponsored_badge {
+            display: block;
+            color: black;
+            padding: 0.5rem;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #f2f2f2;
+            border-bottom-left-radius: 20px;
+            font-weight: bold;
+
+            border-bottom: 5px solid #ffde59;
+            border-left: 5px solid #ffde59;
+        }
+    }
+
+    .sponsored_badge {
+        display: none;
+    }
+
 }
 
 .my_card_content {
