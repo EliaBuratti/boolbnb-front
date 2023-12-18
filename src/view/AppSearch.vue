@@ -22,6 +22,7 @@ export default {
             lngMax: '',
             latMin: '',
             latMax: '',
+            collapse: true,
         };
     },
     methods: {
@@ -127,6 +128,9 @@ export default {
             })
             //console.log(this.loading);
         },
+        sidebarClick() {
+            this.collapse = !this.collapse;
+        }
 
     },
     mounted() {
@@ -138,73 +142,116 @@ export default {
 </script>
 
 <template>
-    <div class="d-flex">
+    <div class="d-flex position-relative">
 
-        <!-- Sidebar -->
-        <div class="col-3 bg-light sidebar p-3">
-
-            <h5>Filters</h5>
-            <form action="#" method="get">
-                <div class="row row-cols-1 row-cols-lg-2 mb-3">
-                    <div class="col">
-                        <label for="rooms" class="form-label">Rooms</label>
-                        <input type="number" min="1" max="25" class="form-control" name="rooms" id="rooms" v-model="rooms"
-                            :placeholder="(this.rooms !== null ? this.rooms : 'Rooms number')" />
+        <div class="loader-container text-white w-100 h-100" v-if="loading">
+            <div class="loading d-flex justify-content-center align-items-center h-100">
+                <section class="loader">
+                    <div>
+                        <div>
+                            <span class="one h6"></span>
+                            <span class="two h3"></span>
+                        </div>
                     </div>
 
-                    <div class="col">
-                        <label for="beds" class="form-label">Beds</label>
-                        <input type="number" min="1" max="25" class="form-control" name="beds" id="beds"
-                            placeholder="Beds number" :placeholder="this.beds" v-model="beds" />
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-12 col-xl-7">
-                        <label for="location" class="form-label">Location</label>
-                        <input type="text" class="form-control" name="location" id="location" :placeholder="this.location"
-                            v-model="location" />
+                    <div>
+                        <div>
+                            <span class="one h1"></span>
+                        </div>
                     </div>
 
-
-                    <div class="col-12 col-xl-5">
-                        <label for="range" class="form-label">Range (km)</label>
-                        <input type="number" min="1" max="2000" class="form-control" name="range" id="range"
-                            :placeholder="this.range" v-model="range" />
+                    <div>
+                        <div>
+                            <span class="two h2"></span>
+                        </div>
                     </div>
-                </div>
-
-
-
-                <div class="mb-2">Services</div>
-                <div class="form-check mb-3">
-
-                    <div v-for="(service, i) in state.services"> <!-- :key="item.id" -->
-                        <input class="form-check-input" type="checkbox" :value="service.slug" :id="service.slug"
-                            v-model="queryServices" />
-                        <label class="form-check-label" :for="service.slug"> {{ service.name }} </label>
+                    <div>
+                        <div>
+                            <span class="one h4"></span>
+                        </div>
                     </div>
-                </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="position-absolute sidebar-container col-lg-3 col-md-4 col-sm-6 col-8 h-100">
+
+            <!-- Sidebar collapse -->
+            <div class="sidebar-collapse bg-dark primary p-3 d-flex justify-content-center align-items-center ms-1"
+                v-on:click="sidebarClick()" :class="collapse == false ? 'collapse-btn' : ''">
+                <i class="fa-solid fa-filter"></i>
+            </div>
+
+            <!-- Sidebar -->
+            <div class=" bg-light sidebar p-3 shadow" v-show="collapse == false">
+                <h5>Filters</h5>
+
+                <form action="#" method="get">
+                    <div class="row row-cols-1 row-cols-lg-2 mb-3">
+                        <div class="col">
+                            <label for="rooms" class="form-label">Rooms</label>
+                            <input type="number" min="1" max="25" class="form-control" name="rooms" id="rooms"
+                                v-model="rooms" :placeholder="(this.rooms !== null ? this.rooms : 'Rooms number')" />
+                        </div>
+
+                        <div class="col">
+                          <label for="beds" class="form-label">Beds</label>
+                          <input type="number" min="1" max="25" class="form-control" name="beds" id="beds"
+                              placeholder="Beds number" :placeholder="this.beds" v-model="beds" />
+                          
+                         </div>
+                    </div>
+                    
+                     
+
+                    <div class="row mb-3">
+                        <div class="col-12 col-xl-7">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" class="form-control" name="location" id="location"
+                                :placeholder="this.location" v-model="location" />
+                        </div>
 
 
-                <!-- Da implementare chiamata axios per recuperare servizi? -->
-                <!-- <div class="form-check mb-3">
+                        <div class="col-12 col-xl-5">
+                            <label for="range" class="form-label">Range (km)</label>
+                            <input type="number" min="1" max="2000" class="form-control" name="range" id="range"
+                                :placeholder="this.range" v-model="range" />
+                        </div>
+                    </div>
+
+
+
+                    <div class="mb-2">Services</div>
+                    <div class="form-check mb-3">
+
+                        <div v-for="(service, i) in state.services"> <!-- :key="item.id" -->
+                            <input class="form-check-input" type="checkbox" :value="service.slug" :id="service.slug"
+                                v-model="queryServices" />
+                            <label class="form-check-label" :for="service.slug"> {{ service.name }} </label>
+                        </div>
+                    </div>
+
+
+                    <!-- Da implementare chiamata axios per recuperare servizi? -->
+                    <!-- <div class="form-check mb-3">
                         <div>Services</div>
                         <input class="form-check-input" type="checkbox" value="" id="services" />
                         <label class="form-check-label" for="services"> Default checkbox </label>
                     </div> -->
 
 
-                <button type="submit" class="btn primary fw-semibold btn-send" @click.prevent="searchApartment()"
-                    :disabled="location.trim() === ''">
-                    Search
-                </button>
-                <div class="text-danger" v-if="location.trim() === ''">
-                    Choose location
-                </div>
+                    <button type="submit" class="btn primary fw-semibold btn-send" @click.prevent="searchApartment()"
+                        :disabled="location.trim() === ''" v-on:click="sidebarClick()">
+                        Search
+                    </button>
+                    <div class="text-danger" v-if="location.trim() === ''">
+                        Choose location
+                    </div>
 
 
-            </form>
+                </form>
+            </div>
+
         </div>
 
         <!-- Results -->
@@ -212,7 +259,7 @@ export default {
             <div class="p-3">
                 <h5>Search results</h5>
                 <h6 v-show="loading == false">{{ results }} results</h6>
-                <div v-show="validInput == true" class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-3">
+                <div v-show="validInput == true" class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
                     <div class="col" v-for="  apartment   in   apartments  ">
                         <ApartmentCard :apartment="apartment"></ApartmentCard>
                     </div>
@@ -220,13 +267,10 @@ export default {
                 <div v-show="validInput == false">Invalid Input</div>
             </div>
 
-            <div v-show="loading == true" class="loader text-white rounded-5 p-5">
-                LOADING
-            </div>
         </div>
 
         <!-- Map -->
-        <div class="sidebar col-3">
+        <div class="col-6">
 
             <div id="map" class="w-100 h-100"></div>
 
@@ -237,12 +281,6 @@ export default {
 
 
 <style lang="scss" scoped>
-.loading {
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .sidebar,
 .results {
     position: relative;
@@ -281,10 +319,45 @@ export default {
     }
 }
 
-.loader {
-    top: 100px;
-    left: 50%;
+.loader-container {
+    position: absolute;
+    background-color: #000000bd;
+    z-index: 100;
+}
+
+.sidebar {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.sidebar-collapse {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 3;
+    width: 2rem;
+    height: 3rem;
+    border-radius: 0.75rem;
+    opacity: 66%;
+    transition: 0.25s;
     transform: translate(0, -50%);
-    background-color: #ffde59;
+
+    &:hover {
+        opacity: 100%;
+    }
+}
+
+.collapse-btn {
+    left: unset;
+    right: 0;
+    transform: translate(31%, -50%);
+    opacity: 100%;
+}
+
+.sidebar-container {
+    top: 0;
+    left: 0;
 }
 </style>
