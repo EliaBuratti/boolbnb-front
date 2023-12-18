@@ -146,15 +146,8 @@ export default {
         <div id="carousel">
 
             <div class="carousel-content w-100 d-flex justify-content-center align-items-center">
-                <div class="close" @click="carouselClose()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
-                        class="bi bi-x-square-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708" />
-                    </svg>
-                </div>
-                <div class="container h-75">
-                    <div class="row justify-content-center">
+                <div class="container h-100">
+                    <div class="row justify-content-center align-items-center h-100">
                         <div class="col-1 d-flex justify-content-center align-items-center">
                             <div class="prev" @click="carouselPrev()">
                                 <svg xmlns="http://www.w3.org/1000/svg" width="35" height="35" fill="#ffde59"
@@ -164,13 +157,18 @@ export default {
                                 </svg>
                             </div>
                         </div>
-                        <div class="col-10">
+                        <div class="col-10 py-3 h-100">
                             <img class="carousel_img img-fluid"
-                                :src="'http://127.0.0.1:8000/storage/' + this.imagesCarousel[carouselPoint]" alt="">
-
-
+                                :src="'http://127.0.0.1:8000/storage/' + this.imagesCarousel[carouselPoint]">
                         </div>
-                        <div class="col-1 d-flex justify-content-center align-items-center">
+                        <div class="col-1 h-100 d-flex justify-content-center align-items-center position-relative">
+                            <div class="close" @click="carouselClose()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
+                                    class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708" />
+                                </svg>
+                            </div>
                             <div class="next" @click="carouselNext()">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="#ffde59"
                                     class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">
@@ -386,19 +384,22 @@ img {
     display: none;
 
     & .close {
+        color: white;
         position: absolute;
-        top: 4rem;
-        right: 4rem;
+        top: 1rem;
+
+        &:hover {
+            color: #ffde59;
+        }
     }
 
     & .carousel-content {
-        background: #0000006b;
+        background: #000000b9;
         z-index: 2;
         position: fixed;
         height: calc(100% - 110px);
 
         & .carousel_img {
-            max-height: 80%;
             object-fit: contain;
         }
     }
