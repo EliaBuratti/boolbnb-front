@@ -57,7 +57,6 @@ export default {
                         this.coordinatesCenter = [];
                         let lngAll = [];
                         let latAll = [];
-                        //console.log(this.apartments);
 
                         this.apartments = response.data.result;
                         //const allApartments = response.data.result.data;
@@ -89,8 +88,6 @@ export default {
                         }
 
                         this.results = this.apartments.length;
-
-                        //console.log(this.coordinatesCenter);
                         this.fetchMap();
 
                     }
@@ -199,9 +196,12 @@ export default {
 
 
                 <button type="submit" class="btn primary fw-semibold btn-send" @click.prevent="searchApartment()"
-                    :disabled="location === ''">
+                    :disabled="location.trim() === ''">
                     Search
                 </button>
+                <div class="text-danger" v-if="location.trim() === ''">
+                    Choose location
+                </div>
 
 
             </form>
