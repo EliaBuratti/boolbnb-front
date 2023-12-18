@@ -23,6 +23,7 @@ export default {
             latMin: '',
             latMax: '',
             collapse: true,
+            sponsored: [],
         };
     },
     methods: {
@@ -61,6 +62,8 @@ export default {
 
                         this.apartments = response.data.result;
                         //const allApartments = response.data.result.data;
+
+                        this.sponsored = response.data.sponsored;
 
                         //console.log(this.apartments);
                         this.coordinatesCenter = response.data.coordinates;
@@ -195,14 +198,14 @@ export default {
                         </div>
 
                         <div class="col">
-                          <label for="beds" class="form-label">Beds</label>
-                          <input type="number" min="1" max="25" class="form-control" name="beds" id="beds"
-                              placeholder="Beds number" :placeholder="this.beds" v-model="beds" />
-                          
-                         </div>
+                            <label for="beds" class="form-label">Beds</label>
+                            <input type="number" min="1" max="25" class="form-control" name="beds" id="beds"
+                                placeholder="Beds number" :placeholder="this.beds" v-model="beds" />
+
+                        </div>
                     </div>
-                    
-                     
+
+
 
                     <div class="row mb-3">
                         <div class="col-12 col-xl-7">
@@ -261,7 +264,7 @@ export default {
                 <h6 v-show="loading == false">{{ results }} results</h6>
                 <div v-show="validInput == true" class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
                     <div class="col" v-for="  apartment   in   apartments  ">
-                        <ApartmentCard :apartment="apartment"></ApartmentCard>
+                        <ApartmentCard :apartment="apartment" :sponsored="this.sponsored"></ApartmentCard>
                     </div>
                 </div>
                 <div v-show="validInput == false">Invalid Input</div>
