@@ -326,6 +326,10 @@ export default {
     position: absolute;
     background-color: #000000bd;
     z-index: 100;
+
+    span {
+        margin: 0;
+    }
 }
 
 .sidebar {
