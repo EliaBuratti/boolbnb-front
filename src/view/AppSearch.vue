@@ -104,7 +104,30 @@ export default {
                 })
         },
 
+        hoverMarker(apartment) {
+            let markerEl = document.getElementById(apartment);
+            console.log(markerEl);
+            let svgEl = markerEl.firstElementChild;
+            markerEl.style.height = '52px';
+            markerEl.style.transition = '0.5s';
+            svgEl.style.transform = 'scale(1.5)';
+            svgEl.style.transition = '0.5s';
+            svgEl.style.fill = '#ffde59';
+        },
+
+        hoverRemove(apartment) {
+            let markerEl = document.getElementById(apartment);
+            let svgEl = markerEl.firstElementChild;
+            svgEl.style.transform = 'scale(1)';
+            svgEl.style.fill = 'black';
+            markerEl.style.height = '36px';
+        },
+
+
         fetchMap() {
+
+            document.getElementById('map').innerHTML = ' ';
+
             let sw = new tt.LngLat(this.lngMin, this.latMax);
             let ne = new tt.LngLat(this.lngMax, this.latMin);
             let llb = new tt.LngLatBounds(sw, ne);
@@ -125,11 +148,16 @@ export default {
             map.on('load', () => {
                 this.apartments.forEach(apartment => {
                     const apartmentCoordinates = [apartment.longitude, apartment.latitude];
-                    new tt.Marker().setLngLat(apartmentCoordinates).addTo(map);
+                    const marker = new tt.Marker().setLngLat(apartmentCoordinates).addTo(map);
+                    marker._element.classList.add('marker');
+                    marker._element.id = `apartment-${apartment.id}`;
+                    console.log(marker._element);
                 });
-                new tt.Marker({ color: '#ffde59', scale: 0.75 }).setLngLat(this.coordinatesCenter).addTo(map);
+                new tt.Marker({ color: '#0073ff', scale: 0.75 }).setLngLat(this.coordinatesCenter).addTo(map);
             })
             //console.log(this.loading);
+
+
         },
         sidebarClick() {
             this.collapse = !this.collapse;
@@ -263,7 +291,9 @@ export default {
                 <h5>Search results</h5>
                 <h6 v-show="loading == false">{{ results }} results</h6>
                 <div v-show="validInput == true" class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
-                    <div class="col" v-for="  apartment   in   apartments  ">
+                    <div class="col" v-for="  apartment   in   apartments  "
+                        @mouseenter="hoverMarker(`apartment-${apartment.id}`)"
+                        @mouseleave="hoverRemove(`apartment-${apartment.id}`)">
                         <ApartmentCard :apartment="apartment" :sponsored="this.sponsored"></ApartmentCard>
                     </div>
                 </div>
@@ -366,5 +396,10 @@ export default {
 .sidebar-container {
     top: 0;
     left: 0;
+}
+
+.focus-marker {
+    transform: scale(1.3) !important;
+
 }
 </style>
