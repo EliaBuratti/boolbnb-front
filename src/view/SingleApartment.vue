@@ -346,9 +346,9 @@ export default {
 
 
 
-                <div class="mt-3">
+                <!-- <div class="mt-3">
                     <h3>In evidenza</h3>
-                </div>
+                </div> -->
             </div>
         </div>
     </main>
