@@ -23,11 +23,17 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-footer{
+footer {
     height: 50px;
 }
 
 .github {
-    font-size: 0.85rem;
+    font-size: 0.6rem;
+}
+
+@media screen and (min-width: 440px) {
+    .github {
+        font-size: 0.85rem;
+    }
 }
 </style>
