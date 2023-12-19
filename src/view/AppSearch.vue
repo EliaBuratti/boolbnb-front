@@ -121,6 +121,7 @@ export default {
             svgEl.style.transform = 'scale(1)';
             svgEl.style.fill = 'black';
             markerEl.style.height = '36px';
+            markerEl.style.transition = 'none';
         },
 
 
