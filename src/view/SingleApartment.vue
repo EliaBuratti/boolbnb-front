@@ -212,7 +212,7 @@ export default {
             </div>
         </div>
 
-        <div v-show="!loading">
+        <div class="mb-4" v-show="!loading">
             <div class="container">
                 <h1 class="mt-3">{{ apartment.title }}</h1>
 
