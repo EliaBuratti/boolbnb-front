@@ -7,10 +7,10 @@ export default {
     name: 'AppSearch',
     data() {
         return {
+            state,
             loading: true,
             validInput: true,
             results: null,
-            state,
             apartments: [],
             queryServices: [],
             location: this.$route.query.location,
@@ -49,6 +49,7 @@ export default {
             })
                 .then(response => {
 
+                    // IF invalid input
                     if (response.data.result == 'Nothing address found') {
                         this.validInput = false;
                         this.results = 0;
@@ -61,14 +62,10 @@ export default {
                         let latAll = [];
 
                         this.apartments = response.data.result;
-                        //const allApartments = response.data.result.data;
-
                         this.sponsored = response.data.sponsored;
-
-                        //console.log(this.apartments);
                         this.coordinatesCenter = response.data.coordinates;
-                        //console.log(this.coordinatesCenter);
 
+                        //IF results == 0 > set the box viewer of the map with coordinates of the location searched
                         if (this.apartments.length == 0) {
                             this.lngMin = this.coordinatesCenter[0];
                             this.lngMax = this.coordinatesCenter[0];
@@ -76,24 +73,34 @@ export default {
                             this.latMin = this.coordinatesCenter[1];
                             this.latMax = this.coordinatesCenter[1];
                         } else {
+                            // Set the box viewer of the map with the max/min value of lng/lat
+                            // Push all longitudes of apartments
                             this.apartments.forEach(apartment => {
                                 lngAll.push(apartment.longitude);
                             });
+                            // Push also the longitude of the location searched
                             lngAll.push(this.coordinatesCenter[0]);
+
+                            // Find the max and min longitude value
                             this.lngMin = Math.min.apply(Math, lngAll);
                             this.lngMax = Math.max.apply(Math, lngAll);
 
+                            // Push all latitudes of apartments
                             this.apartments.forEach(apartment => {
                                 latAll.push(apartment.latitude);
                             });
+                            // Push also the latitude of the location searched
                             latAll.push(this.coordinatesCenter[1])
+
+                            // Find the max and min latitude value
                             this.latMin = Math.min.apply(Math, latAll);
                             this.latMax = Math.max.apply(Math, latAll);
                         }
 
+                        // Number of results
                         this.results = this.apartments.length;
-                        this.fetchMap();
 
+                        this.fetchMap();
                     }
 
                     this.loading = false;
@@ -124,15 +131,14 @@ export default {
             markerEl.style.transition = 'none';
         },
 
-
         fetchMap() {
 
             document.getElementById('map').innerHTML = ' ';
 
+            // Set the 4 corners of the map viewbox
             let sw = new tt.LngLat(this.lngMin, this.latMax);
             let ne = new tt.LngLat(this.lngMax, this.latMin);
             let llb = new tt.LngLatBounds(sw, ne);
-            //console.log(llb);
 
             const map = tt.map({
                 key: 'udRMY8mFZ7o4kiJOvK0ShT9DEn82wGyT',
@@ -141,11 +147,13 @@ export default {
                 zoom: 9
             })
 
+            // Apply the viewbox
             map.fitBounds(llb, {
                 padding: { top: 30, bottom: 10, left: 20, right: 20 },
                 maxZoom: 9
             });
 
+            // Add markers
             map.on('load', () => {
                 this.apartments.forEach(apartment => {
                     const apartmentCoordinates = [apartment.longitude, apartment.latitude];
@@ -154,20 +162,21 @@ export default {
                     marker._element.id = `apartment-${apartment.id}`;
                     console.log(marker._element);
                 });
+
+                // Add marker of the location searched
                 new tt.Marker({ color: '#0073ff', scale: 0.75 }).setLngLat(this.coordinatesCenter).addTo(map);
             })
-            //console.log(this.loading);
-
-
         },
+
+        // To collapse the sidebar
         sidebarClick() {
             this.collapse = !this.collapse;
         }
 
     },
     mounted() {
-        //console.log(this.loading);
-        this.searchApartment()
+        this.searchApartment();
+        state.fetchServices();
     },
     components: { ApartmentCard }
 }
