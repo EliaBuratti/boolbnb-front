@@ -6,11 +6,11 @@ export default {
         return {
             loading: true,
             apartment: {},
+            imagesCarousel: [],
+            carouselPoint: 0,
             lat: '',
             lng: '',
             coordinates: [],
-            imagesCarousel: [],
-            carouselPoint: 0,
             apartmentID: null,
             contactName: null,
             contactMail: null,
@@ -29,16 +29,14 @@ export default {
                     response.data.result.images.forEach(image => {
                         this.imagesCarousel.push(image.img);
                     });
-                    //console.log(this.imagesCarousel);
                     this.apartment = response.data.result;
                     this.lat = this.apartment.latitude;
                     this.lng = this.apartment.longitude;
                     this.coordinates.push(this.lng, this.lat);
+                    this.apartmentID = response.data.result.id;
+                    this.mailSubject = `Information about ${response.data.result.title}`
                     this.fetchMap();
                     this.loading = false;
-                    this.apartmentID = response.data.result.id;
-                    this.mailSubject = `information about ${response.data.result.title}`
-
                 })
                 .catch(error => {
                     console.error(error);
@@ -56,18 +54,15 @@ export default {
                 new tt.Marker({ color: '#ffde59' }).setLngLat(this.coordinates).addTo(map)
             })
         },
+
         carouselNext() {
-            //console.log(this.imagesCarousel);
             if (this.carouselPoint < (this.imagesCarousel.length - 1)) {
-                //console.log(this.imagesCarousel.length - 1);
-                //console.log(this.carouselPoint);
                 this.carouselPoint++;
-                //console.log(this.carouselPoint);
             } else {
                 this.carouselPoint = 0;
-                //console.log(this.carouselPoint);
             }
         },
+
         carouselPrev() {
             if (this.carouselPoint > 0) {
                 this.carouselPoint--;
@@ -75,14 +70,17 @@ export default {
                 this.carouselPoint = (this.imagesCarousel.length - 1)
             }
         },
+
         carouselShow() {
             const carousel = document.getElementById('carousel');
             carousel.style.display = "block"
         },
+
         carouselClose() {
             const carousel = document.getElementById('carousel');
             carousel.style.display = "none"
         },
+
         sendMessages() {
             axios({
                 method: 'post',
@@ -106,12 +104,12 @@ export default {
             this.mailBody = '';
             this.responseMessage = null;
         },
+
         viewsCounter() {
             axios.get('https://api.ipify.org/')
                 .then(response => {
-                    //console.log(response.data);
                     this.ip = response.data;
-                    //console.log(this.ip);
+
                     axios({
                         method: 'post',
                         url: 'http://127.0.0.1:8000/api/views',
@@ -127,16 +125,12 @@ export default {
                             console.log(error);
                         })
                 });
-            //console.log(this.ip);
-
         }
-
-
     },
-    mounted() {
-        this.fetchSingleApartment(),
-            this.viewsCounter()
 
+    mounted() {
+        this.fetchSingleApartment();
+        this.viewsCounter();
     }
 }
 </script>
@@ -319,13 +313,13 @@ export default {
                                 <div class="row row-cols-md-2 row-cols-1 g-3">
                                     <div class="col">
                                         <label for="name" class="form-label">Name</label>
-                                        <input type="text" class="form-control" name="name" id="name" placeholder="name"
+                                        <input type="text" class="form-control" name="name" id="name" placeholder="Type your name"
                                             v-model="this.contactName" required />
                                     </div>
                                     <div class="col">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="email" class="form-control" name="email" id="email"
-                                            placeholder="insert your mail" v-model="contactMail" required />
+                                            placeholder="Type your mail" v-model="contactMail" required />
                                     </div>
                                 </div>
 

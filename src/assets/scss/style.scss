@@ -407,13 +407,6 @@ $primary: #ffde59;
                 overflow: auto;
             }
 
-            .collapse-btn {
-                left: unset;
-                right: 0;
-                transform: translate(31%, -50%);
-                opacity: 100%;
-            }
-
             .sidebar-collapse {
                 position: absolute;
                 top: 50%;
@@ -429,6 +422,13 @@ $primary: #ffde59;
                 &:hover {
                     opacity: 100%;
                 }
+            }
+
+            .collapse-btn {
+                left: unset;
+                right: 0;
+                transform: translate(31%, -50%);
+                opacity: 100%;
             }
         }
 
