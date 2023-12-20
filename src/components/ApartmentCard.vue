@@ -1,3 +1,18 @@
+<script>
+export default {
+    name: 'ApartmentCard',
+    data() {
+        return {
+            baseURL: 'http://127.0.0.1:8000/storage',
+        }
+    },
+    props: {
+        'apartment': Object,
+        'sponsored': Object
+    }
+}
+</script>
+
 <template>
     <router-link :to="{ name: 'apartment', params: { slug: apartment.slug } }">
         <div class="my_card shadow" :class="sponsored.includes(apartment.id) ? 'sponsored' : ''">
@@ -5,95 +20,9 @@
             <div class="my_card_content">
                 <h6 class="fw-semibold text-dark">{{ apartment.title }}</h6>
             </div>
-
             <div class="sponsored_badge">
                 Sponsored
             </div>
         </div>
     </router-link>
 </template>
-
-<script>
-export default {
-    name: 'ApartmentCard',
-    data() {
-        return {
-            baseURL: 'http://127.0.0.1:8000/storage',
-
-        }
-    },
-    props: {
-        'apartment': Object,
-        'sponsored': Object
-    },
-}
-</script>
-
-<style lang="scss">
-.my_card {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1;
-    overflow: hidden;
-    border-radius: 20px;
-
-    .image {
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-    }
-
-    &.sponsored {
-        .sponsored_badge {
-            display: block;
-            color: black;
-            padding: 0.5rem;
-            position: absolute;
-            top: 0;
-            right: 0;
-            background-color: #f2f2f2;
-            border-bottom-left-radius: 20px;
-            font-weight: bold;
-
-            border-bottom: 5px solid #ffde59;
-            border-left: 5px solid #ffde59;
-        }
-    }
-
-    .sponsored_badge {
-        display: none;
-    }
-
-}
-
-.my_card_content {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    padding: 1rem;
-    padding-right: 2rem;
-    background: #f2f2f2;
-    border-top-left-radius: 20px;
-    /* edit here to change the height of the content box */
-    transform: translateY(90%);
-    transition: transform .25s;
-    border-top: 5px solid #ffde59;
-}
-
-.my_card_content::before {
-    content: '';
-    position: absolute;
-    top: -47px;
-    right: -45px;
-    width: 100px;
-    height: 100px;
-    transform: rotate(-175deg);
-    border-radius: 50%;
-    box-shadow: inset 48px 48px #f2f2f2;
-}
-
-.my_card:hover .my_card_content {
-    transform: translateY(0);
-}
-</style>

@@ -1,244 +1,485 @@
 @import url('../../../node_modules/bootstrap/scss/bootstrap.scss');
 $primary: #ffde59;
 
-*{
+* {
     font-family: 'Montserrat', sans-serif;
 }
 
-.hover{
-    &:hover{
+/* #region utilities */
+.hover {
+    &:hover {
         color: $primary;
     }
 }
 
-.primary{
+.primary {
     color: $primary;
 }
 
-.bg_primary{
+.bg_primary {
     background-color: $primary;
 }
 
-.loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* Add these properties to position the loader properly */
-    position: relative;
-    width: 90px;
-    height: 103px;
-    /* Adjust the height to accommodate the "h4" span */
+.btn-send {
+    border: 2px solid #ffde59;
+    font-weight: 600;
+
+    &:hover {
+        background-color: #ffde59;
+    }
 }
 
-.loader div {
-    position: absolute;
-    width: 50px;
-    height: 31px;
+/* #endregion utilities */
+
+/* #region scrollbar */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
 }
 
-.rot {
-    transform: rotate(150deg);
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
 }
 
-.rot2 {
-    transform: rotate(20deg);
-}
-
-.loader div:nth-of-type(2) {
-    transform: rotate(60deg);
-}
-
-.loader div:nth-of-type(3) {
-    transform: rotate(-60deg);
-}
-
-.loader div div {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-.loader div div span {
-    position: absolute;
-    width: 4px;
-    height: 0%;
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: #ffde59;
-    z-index: 999999;
 }
 
-.h1 {
-    left: 0;
-    animation: load1 3.2s ease infinite;
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #ffc259;
 }
 
-.h2 {
-    right: 0;
-    animation: load2 3.2s ease 0.4s infinite;
-}
+/* #endregion scrollbar */
 
-.h3 {
-    right: 0;
-    animation: load3 3.2s ease 0.8s infinite;
-}
+/* #region loader */
+.loader-container {
+    background-color: #000000bd;
+    z-index: 100;
 
-.h4 {
-    top: 10px;
-    left: 23px;
-    animation: load4 3.2s ease 1s infinite;
-    transform: rotate(90deg);
-}
-
-.h5 {
-    bottom: 0;
-    animation: load5 3.2s ease 1.2s infinite;
-}
-
-.h6 {
-    left: 0;
-    animation: load6 3.2s ease 1.3s infinite;
-}
-
-@keyframes load1 {
-    0% {
-        bottom: 0;
-        height: 0;
+    span {
+        margin: 0;
     }
 
-    6.944444444% {
-        bottom: 0;
+    .loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* Add these properties to position the loader properly */
+        position: relative;
+        width: 90px;
+        height: 103px;
+        /* Adjust the height to accommodate the "h4" span */
+    }
+
+    .loader div {
+        position: absolute;
+        width: 50px;
+        height: 31px;
+    }
+
+    .rot {
+        transform: rotate(150deg);
+    }
+
+    .rot2 {
+        transform: rotate(20deg);
+    }
+
+    .loader div:nth-of-type(2) {
+        transform: rotate(60deg);
+    }
+
+    .loader div:nth-of-type(3) {
+        transform: rotate(-60deg);
+    }
+
+    .loader div div {
+        width: 100%;
         height: 100%;
+        position: relative;
     }
 
-    50% {
-        top: 0;
-        height: 100%;
+    .loader div div span {
+        position: absolute;
+        width: 4px;
+        height: 0%;
+        background: #ffde59;
+        z-index: 999999;
     }
 
-    59.944444433% {
-        top: 0;
-        height: 0;
+    .h1 {
+        left: 0;
+        animation: load1 3.2s ease infinite;
     }
 
-    /*   91.6666667%{top:0;height:0%;} */
-}
-
-@keyframes load2 {
-    0% {
-        top: 0;
-        height: 0;
+    .h2 {
+        right: 0;
+        animation: load2 3.2s ease 0.4s infinite;
     }
 
-    6.944444444% {
-        top: 0;
-        height: 100%;
+    .h3 {
+        right: 0;
+        animation: load3 3.2s ease 0.8s infinite;
     }
 
-    50% {
-        bottom: 0;
-        height: 100%;
-    }
-
-    59.944444433% {
-        bottom: 0;
-        height: 0;
-    }
-
-    /*   91.6666667%{bottom:0;height:0%} */
-}
-
-@keyframes load3 {
-    0% {
-        top: 0;
-        height: 0;
-    }
-
-    6.944444444% {
-        top: 0;
-        height: 100%;
-    }
-
-    50% {
-        bottom: 0;
-        height: 100%;
-    }
-
-    59.94444443% {
-        bottom: 0;
-        height: 0;
-    }
-
-    /*   91.6666667%{bottom:0;height:0%;} */
-}
-
-@keyframes load4 {
-    0% {
-        top: 37px;
-        left: 23px;
-        height: 134%;
-    }
-
-    6.944444444% {
+    .h4 {
         top: 10px;
-        height: 134%;
+        left: 23px;
+        animation: load4 3.2s ease 1s infinite;
+        transform: rotate(90deg);
     }
 
-    50% {
-        bottom: 10px;
-        height: 134%;
-    }
-
-    59.94444443% {
+    .h5 {
         bottom: 0;
-        height: 0;
+        animation: load5 3.2s ease 1.2s infinite;
     }
 
-    /*   91.6666667%{bottom:0;height:0%;} */
+    .h6 {
+        left: 0;
+        animation: load6 3.2s ease 1.3s infinite;
+    }
+
+    @keyframes load1 {
+        0% {
+            bottom: 0;
+            height: 0;
+        }
+
+        6.944444444% {
+            bottom: 0;
+            height: 100%;
+        }
+
+        50% {
+            top: 0;
+            height: 100%;
+        }
+
+        59.944444433% {
+            top: 0;
+            height: 0;
+        }
+
+        /*   91.6666667%{top:0;height:0%;} */
+    }
+
+    @keyframes load2 {
+        0% {
+            top: 0;
+            height: 0;
+        }
+
+        6.944444444% {
+            top: 0;
+            height: 100%;
+        }
+
+        50% {
+            bottom: 0;
+            height: 100%;
+        }
+
+        59.944444433% {
+            bottom: 0;
+            height: 0;
+        }
+
+        /*   91.6666667%{bottom:0;height:0%} */
+    }
+
+    @keyframes load3 {
+        0% {
+            top: 0;
+            height: 0;
+        }
+
+        6.944444444% {
+            top: 0;
+            height: 100%;
+        }
+
+        50% {
+            bottom: 0;
+            height: 100%;
+        }
+
+        59.94444443% {
+            bottom: 0;
+            height: 0;
+        }
+
+        /*   91.6666667%{bottom:0;height:0%;} */
+    }
+
+    @keyframes load4 {
+        0% {
+            top: 37px;
+            left: 23px;
+            height: 134%;
+        }
+
+        6.944444444% {
+            top: 10px;
+            height: 134%;
+        }
+
+        50% {
+            bottom: 10px;
+            height: 134%;
+        }
+
+        59.94444443% {
+            bottom: 0;
+            height: 0;
+        }
+
+        /*   91.6666667%{bottom:0;height:0%;} */
+    }
+
+    @keyframes load5 {
+        0% {
+            bottom: 0;
+            height: 0;
+        }
+
+        6.944444444% {
+            bottom: 0;
+            height: 100%;
+        }
+
+        50% {
+            top: 0;
+            height: 100%;
+        }
+
+        59.94444443% {
+            top: 0;
+            height: 0;
+        }
+
+        /*   91.6666667%{top:0;height:0%;} */
+    }
+
+    @keyframes load6 {
+        0% {
+            bottom: 0;
+            height: 0;
+        }
+
+        6.944444444% {
+            bottom: 0;
+            height: 100%;
+        }
+
+        50% {
+            top: 0;
+            height: 100%;
+        }
+
+        59.94444443% {
+            top: 0;
+            height: 0;
+        }
+
+        /*   91.6666667%{top:0;height:0%;} */
+    }
 }
 
-@keyframes load5 {
-    0% {
-        bottom: 0;
-        height: 0;
-    }
+/* #endregion loader */
 
-    6.944444444% {
-        bottom: 0;
+/* #region apartment-card */
+.my_card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 20px;
+
+    .image {
+        object-fit: cover;
+        width: 100%;
         height: 100%;
     }
 
-    50% {
-        top: 0;
-        height: 100%;
+    &.sponsored {
+        .sponsored_badge {
+            display: block;
+            color: black;
+            padding: 0.5rem;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #f2f2f2;
+            border-bottom-left-radius: 20px;
+            font-weight: bold;
+
+            border-bottom: 5px solid #ffde59;
+            border-left: 5px solid #ffde59;
+        }
     }
 
-    59.94444443% {
-        top: 0;
-        height: 0;
+    .sponsored_badge {
+        display: none;
     }
 
-    /*   91.6666667%{top:0;height:0%;} */
 }
 
-@keyframes load6 {
-    0% {
-        bottom: 0;
-        height: 0;
+.my_card_content {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 1rem;
+    padding-right: 2rem;
+    background: #f2f2f2;
+    border-top-left-radius: 20px;
+    /* edit here to change the height of the content box */
+    transform: translateY(90%);
+    transition: transform .25s;
+    border-top: 5px solid #ffde59;
+}
+
+.my_card_content::before {
+    content: '';
+    position: absolute;
+    top: -47px;
+    right: -45px;
+    width: 100px;
+    height: 100px;
+    transform: rotate(-175deg);
+    border-radius: 50%;
+    box-shadow: inset 48px 48px #f2f2f2;
+}
+
+.my_card:hover .my_card_content {
+    transform: translateY(0);
+}
+
+/* #endregion apartment-card */
+
+//WebSite Structure
+#window {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+
+    header {
+        height: 60px;
     }
 
-    6.944444444% {
-        bottom: 0;
-        height: 100%;
+    #main {
+        overflow-y: scroll;
+        height: calc(100% - 110px);
+
+        /* #region AppHome */
+
+        .jumbo {
+            background-image: url(../../assets/img/Low.jpg);
+            background-position: center;
+            background-size: cover;
+
+            .search-card {
+                background: rgba(255, 255, 255, 0.421);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+            }
+        }
+
+        /* #endregion AppHome */
+
+        /* #region AppSearch */
+        // ⚠️ .loader-container in AppSearch.vue (scoped) ⚠️
+        .sidebar-container {
+            top: 0;
+            left: 0;
+
+            .sidebar {
+                z-index: 2;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: calc(100vh - 110px);
+                overflow: auto;
+            }
+
+            .collapse-btn {
+                left: unset;
+                right: 0;
+                transform: translate(31%, -50%);
+                opacity: 100%;
+            }
+
+            .sidebar-collapse {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                z-index: 3;
+                width: 2rem;
+                height: 3rem;
+                border-radius: 0.75rem;
+                opacity: 66%;
+                transition: 0.25s;
+                transform: translate(0, -50%);
+
+                &:hover {
+                    opacity: 100%;
+                }
+            }
+        }
+
+        .results {
+            height: calc(100vh - 110px);
+            overflow: auto;
+        }
+
+        /* #endregion AppSearch */
+
+        /* #region AppSingleApartment */
+        // ⚠️ MAP & IMG in SingleApartment.vue (scoped) ⚠️
+        #carousel {
+            display: none;
+
+            & .close {
+                color: white;
+                position: absolute;
+                top: 1rem;
+
+                &:hover {
+                    color: #ffde59;
+                }
+            }
+
+            & .carousel-content {
+                background: #000000b9;
+                z-index: 2;
+                position: fixed;
+                height: calc(100% - 110px);
+
+                & .carousel_img {
+                    object-fit: contain;
+                }
+            }
+        }
+
+        /* #endregion AppSingleApartment */
     }
 
-    50% {
-        top: 0;
-        height: 100%;
-    }
+    footer {
+        height: 50px;
 
-    59.94444443% {
-        top: 0;
-        height: 0;
-    }
+        .github {
+            font-size: 0.6rem;
+        }
 
-    /*   91.6666667%{top:0;height:0%;} */
+        @media screen and (min-width: 440px) {
+            .github {
+                font-size: 0.85rem;
+            }
+        }
+    }
 }

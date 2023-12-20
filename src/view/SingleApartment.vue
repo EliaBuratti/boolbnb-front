@@ -143,8 +143,40 @@ export default {
 
 <template>
     <main>
-        <div id="carousel">
 
+        <!-- Loader -->
+        <div v-if="loading" class="loader-container w-100 h-100">
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <section class="loader">
+                    <div>
+                        <div>
+                            <span class="one h6"></span>
+                            <span class="two h3"></span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            <span class="one h1"></span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            <span class="two h2"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <span class="one h4"></span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Carousel -->
+        <div id="carousel">
             <div class="carousel-content w-100 d-flex justify-content-center align-items-center">
                 <div class="container h-100">
                     <div class="row justify-content-center align-items-center h-100">
@@ -182,40 +214,13 @@ export default {
             </div>
         </div>
 
-        <div v-if="loading" class="vh-100 d-flex justify-content-center align-items-center">
-            <div>
-                <section class="loader">
-                    <div>
-                        <div>
-                            <span class="one h6"></span>
-                            <span class="two h3"></span>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div>
-                            <span class="one h1"></span>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div>
-                            <span class="two h2"></span>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <span class="one h4"></span>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-
+        <!-- Content -->
         <div class="mb-4" v-show="!loading">
             <div class="container">
+
                 <h1 class="mt-3">{{ apartment.title }}</h1>
 
+                <!-- Images -->
                 <div class="row mb-4">
                     <div class="col-md-8 col-12">
                         <img @click="carouselShow()" :src="'http://127.0.0.1:8000/storage/' + apartment.thumbnail"
@@ -234,8 +239,7 @@ export default {
                     </div>
                 </div>
 
-
-
+                <!-- Basic Information -->
                 <div class="mb-4">
                     <h4 class="mb-3">Basic informations</h4>
                     <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-2 row-cols-1 g-md-0 g-3">
@@ -271,12 +275,13 @@ export default {
                     </div>
                 </div>
 
+                <!-- Description -->
                 <div class="mb-4">
                     <h4 class="mb-3">Description</h4>
                     <p class="mb-4">{{ apartment.description }}</p>
                 </div>
 
-
+                <!-- Services -->
                 <div class="mb-5">
                     <h4 class="mb-3">Services</h4>
                     <div class="d-flex gap-2 flex-wrap">
@@ -286,17 +291,21 @@ export default {
                     </div>
                 </div>
 
+                <!-- Row: Map + Form -->
                 <div class="row align-items-center g-4">
+
+                    <!-- Map -->
                     <div class="col-xxl-4 col-12">
                         <h4>Position</h4>
                         <div id="map" class="rounded-5"></div>
                     </div>
 
-
+                    <!-- Form message -->
                     <div class="col-xxl-8 col-12">
                         <div class="rounded-5 py-4 px-5 shadow bg-dark text-white">
                             <h3 class="text-center primary fw-semibold">Contact me</h3>
 
+                            <!-- Success Alert Messagge Sent -->
                             <div v-if="this.responseMessage !== null"
                                 class="alert alert-success alert-dismissible fade show" role="alert">
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
@@ -304,7 +313,7 @@ export default {
                                 <strong> Thanks!</strong> {{ this.responseMessage }}
                             </div>
 
-
+                            <!-- Form -->
                             <form @submit.prevent="sendMessages()" method="post">
 
                                 <div class="row row-cols-md-2 row-cols-1 g-3">
@@ -317,11 +326,8 @@ export default {
                                         <label for="email" class="form-label">Email</label>
                                         <input type="email" class="form-control" name="email" id="email"
                                             placeholder="insert your mail" v-model="contactMail" required />
-
                                     </div>
                                 </div>
-
-
 
                                 <div class="my-3">
                                     <label for="messagge" class="form-label fw-medium">Message</label>
@@ -343,12 +349,6 @@ export default {
                     </div>
                 </div>
 
-
-
-
-                <!-- <div class="mt-3">
-                    <h3>In evidenza</h3>
-                </div> -->
             </div>
         </div>
     </main>
@@ -364,45 +364,6 @@ img {
     object-fit: cover;
     width: 100%;
     height: 100%;
-}
-
-#map {
-    height: 400px;
-    width: 100%;
-}
-
-.btn-send {
-    border: 2px solid #ffde59;
-
-    &:hover {
-        background-color: #ffde59;
-
-    }
-}
-
-#carousel {
-    display: none;
-
-    & .close {
-        color: white;
-        position: absolute;
-        top: 1rem;
-
-        &:hover {
-            color: #ffde59;
-        }
-    }
-
-    & .carousel-content {
-        background: #000000b9;
-        z-index: 2;
-        position: fixed;
-        height: calc(100% - 110px);
-
-        & .carousel_img {
-            object-fit: contain;
-        }
-    }
 }
 
 #map {
