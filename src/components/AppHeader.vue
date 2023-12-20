@@ -15,9 +15,3 @@ export default {
         </div>
     </header>
 </template>
-
-<style lang="scss" scoped>
-header {
-    height: 60px;
-}
-</style>

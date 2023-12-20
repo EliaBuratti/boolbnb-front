@@ -176,7 +176,8 @@ export default {
 <template>
     <div class="d-flex position-relative">
 
-        <div class="loader-container text-white w-100 h-100" v-if="loading">
+        <!-- Loader -->
+        <div class="loader-container w-100 h-100" v-if="loading">
             <div class="loading d-flex justify-content-center align-items-center h-100">
                 <section class="loader">
                     <div>
@@ -206,6 +207,7 @@ export default {
             </div>
         </div>
 
+        <!-- Sidebar Container -->
         <div class="position-absolute sidebar-container col-lg-3 col-md-4 col-sm-6 col-8 h-100">
 
             <!-- Sidebar collapse -->
@@ -214,11 +216,14 @@ export default {
                 <i class="fa-solid fa-filter"></i>
             </div>
 
-            <!-- Sidebar -->
+            <!-- Sidebar open -->
             <div class=" bg-light sidebar p-3 shadow" v-show="collapse == false">
                 <h5>Filters</h5>
 
+                <!-- Form -->
                 <form action="#" method="get">
+
+                    <!-- Rooms + beds -->
                     <div class="row row-cols-1 row-cols-lg-2 mb-3">
                         <div class="col">
                             <label for="rooms" class="form-label">Rooms</label>
@@ -234,15 +239,13 @@ export default {
                         </div>
                     </div>
 
-
-
+                    <!-- Location + range -->
                     <div class="row mb-3">
                         <div class="col-12 col-xl-7">
                             <label for="location" class="form-label">Location</label>
                             <input type="text" class="form-control" name="location" id="location"
                                 :placeholder="this.location" v-model="location" />
                         </div>
-
 
                         <div class="col-12 col-xl-5">
                             <label for="range" class="form-label">Range (km)</label>
@@ -251,28 +254,19 @@ export default {
                         </div>
                     </div>
 
-
-
+                    <!-- Services -->
                     <div class="mb-2">Services</div>
                     <div class="form-check mb-3">
 
-                        <div v-for="(service, i) in state.services"> <!-- :key="item.id" -->
+                        <div v-for="service in state.services">
                             <input class="form-check-input" type="checkbox" :value="service.slug" :id="service.slug"
                                 v-model="queryServices" />
                             <label class="form-check-label" :for="service.slug"> {{ service.name }} </label>
                         </div>
                     </div>
 
-
-                    <!-- Da implementare chiamata axios per recuperare servizi? -->
-                    <!-- <div class="form-check mb-3">
-                        <div>Services</div>
-                        <input class="form-check-input" type="checkbox" value="" id="services" />
-                        <label class="form-check-label" for="services"> Default checkbox </label>
-                    </div> -->
-
-
-                    <button type="submit" class="btn primary fw-semibold btn-send" @click.prevent="searchApartment()"
+                    <!-- Send btn -->
+                    <button type="submit" class="btn primary btn-send" @click.prevent="searchApartment()"
                         :disabled="location.trim() === ''" v-on:click="sidebarClick()">
                         Search
                     </button>
@@ -280,17 +274,24 @@ export default {
                         Choose location
                     </div>
 
-
                 </form>
             </div>
 
         </div>
 
-        <!-- Results -->
+        <!-- Results container -->
         <div class="col-6 results position-relative">
+
             <div class="p-3">
                 <h5>Search results</h5>
+
+                <!-- Number results -->
                 <h6 v-show="loading == false">{{ results }} results</h6>
+
+                <!-- Show invalid input -->
+                <div v-show="validInput == false">Invalid Input</div>
+
+                <!-- Results -->
                 <div v-show="validInput == true" class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
                     <div class="col" v-for="  apartment   in   apartments  "
                         @mouseenter="hoverMarker(`apartment-${apartment.id}`)"
@@ -298,109 +299,19 @@ export default {
                         <ApartmentCard :apartment="apartment" :sponsored="this.sponsored"></ApartmentCard>
                     </div>
                 </div>
-                <div v-show="validInput == false">Invalid Input</div>
             </div>
-
         </div>
 
         <!-- Map -->
         <div class="col-6">
-
             <div id="map" class="w-100 h-100"></div>
-
         </div>
 
     </div>
 </template>
 
-
 <style lang="scss" scoped>
-.sidebar,
-.results {
-    position: relative;
-    top: 0;
-    left: 0;
-    height: calc(100vh - 110px);
-    overflow: auto;
-}
-
-/* width */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #ffde59;
-
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #ffc259;
-}
-
-.btn-send {
-    border: 2px solid #ffde59;
-
-    &:hover {
-        background-color: #ffde59;
-    }
-}
-
-.loader-container {
+.loader-container{
     position: absolute;
-    background-color: #000000bd;
-    z-index: 100;
-
-    span {
-        margin: 0;
-    }
-}
-
-.sidebar {
-    z-index: 2;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.sidebar-collapse {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    z-index: 3;
-    width: 2rem;
-    height: 3rem;
-    border-radius: 0.75rem;
-    opacity: 66%;
-    transition: 0.25s;
-    transform: translate(0, -50%);
-
-    &:hover {
-        opacity: 100%;
-    }
-}
-
-.collapse-btn {
-    left: unset;
-    right: 0;
-    transform: translate(31%, -50%);
-    opacity: 100%;
-}
-
-.sidebar-container {
-    top: 0;
-    left: 0;
-}
-
-.focus-marker {
-    transform: scale(1.3) !important;
-
 }
 </style>
